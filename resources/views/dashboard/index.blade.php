@@ -71,6 +71,10 @@
             </div>
         </form>
 
+        @if (session('msg'))
+            <div class="fundo-mensagem">{{ session('msg') }}</div>
+        @endif
+
         <div class="fundo-soma">
             <div class="fundo-soma-total">
                 <h3>TOTAL</h3>
@@ -94,7 +98,6 @@
                             <th scope="col">Valor R$</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Categoria</th>
-                            <th scope="col">Usuario</th>
                             <th scope="col">Data</th>
                             <th scope="col">Opções</th>
                         </tr>
@@ -106,7 +109,6 @@
                                 <td>{{ $t->valor }}</td>
                                 <td>{{ $t->descricao }}</td>
                                 <td>{{ $t->categoria->nome }}</td>
-                                <td>{{ $t->usuario->nome}}</td>
                                 <td>{{ $t->created_at->format('d/m/Y') }}</td>
                                 <td>
                                     <a href="{{ route('transacoes.show', $t->id) }}">Exibir</a> |
@@ -116,6 +118,26 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                @if ($transacoes->hasPages())
+                    <div class="paginacao">
+                        @if ($transacoes->onFirstPage())
+                            <span class="paginacao-item paginacao-desabilitado">Anterior</span>
+                        @else
+                            <a class="paginacao-item" href="{{ $transacoes->previousPageUrl() }}">Anterior</a>
+                        @endif
+
+                        <span class="paginacao-info">
+                            Página {{ $transacoes->currentPage() }} de {{ $transacoes->lastPage() }}
+                        </span>
+
+                        @if ($transacoes->hasMorePages())
+                            <a class="paginacao-item" href="{{ $transacoes->nextPageUrl() }}">Próxima</a>
+                        @else
+                            <span class="paginacao-item paginacao-desabilitado">Próxima</span>
+                        @endif
+                    </div>
+                @endif
         </div>
     </div>
 </body>

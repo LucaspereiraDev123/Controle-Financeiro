@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriasController extends Controller
 {
@@ -12,7 +13,8 @@ class CategoriasController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
+        $categorias = Auth::user()->categorias()->get();
+
         return view('categorias.index')->with('categorias', $categorias);
     }
 
@@ -29,78 +31,66 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        $categoria = new Categoria();
-        
-        $categoria->nome = $request->input('nome');
-        $categoria->tipo = $request->input('tipo');
+        $dados = $this->validarCategoria($request);
+        $dados['usuario_id'] = Auth::id();
 
-        $categoria->save();
+        Categoria::create($dados);
 
-        $categorias = Categoria::all();
-
-        return view('categorias.index')->with('categorias', $categorias)
-            ->with('msg', 'Categorias cadastrada com sucesso!');
+        return redirect()->route('categorias.index')
+            ->with('msg', 'Categoria cadastrada com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Categoria $categoria)
     {
-        $categoria = Categoria::find($id);
+        $this->authorize('view', $categoria);
 
-        if ($categoria) {
-            return view('categorias.show')->with('categoria', $categoria);
-        } else {
-            return view('categorias.show')->with('msg', 'Categoria não encontrada!');
-        }
+        return view('categorias.show')->with('categoria', $categoria);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Categoria $categoria)
     {
-        $categoria = Categoria::find($id);
+        $this->authorize('update', $categoria);
 
-        if ($categoria) {
-            return view('categorias.edit')->with('categoria', $categoria);
-        } else {
-            $categorias = Categoria::all();
-            return view('categorias.edit')->with('categorias', $categorias)
-                ->with('msg', 'Categoria não encontrada!');
-        }
+        return view('categorias.edit')->with('categoria', $categoria);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Categoria $categoria)
     {
-        $categoria = Categoria::find($id);
+        $this->authorize('update', $categoria);
 
-        $categoria->nome = $request->input('nome');
-        $categoria->tipo = $request->input('tipo');
+        $categoria->update($this->validarCategoria($request));
 
-        $categoria->save();
-
-        $categorias = Categoria::all();
-
-        return view('categorias.index')->with('categorias', $categorias)
+        return redirect()->route('categorias.index')
             ->with('msg', 'Categoria atualizada com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Categoria $categoria)
     {
-        $categoria = Categoria::find($id);
+        $this->authorize('delete', $categoria);
 
         $categoria->delete();
 
-        $categorias = Categoria::all();
-        return view('categorias.index')->with('categorias', $categorias)
-            ->with('msg', 'Categoria excluida com sucesso!');
+        return redirect()->route('categorias.index')
+            ->with('msg', 'Categoria excluída com sucesso!');
+    }
+
+    private function validarCategoria(Request $request): array
+    {
+        return $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
+            'tipo' => ['required', 'string', 'in:Receitas,Despesas'],
+        ]);
     }
 }

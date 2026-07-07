@@ -15,29 +15,34 @@
                 @method('PUT')
             
                     <h2>Editar Transação</h2>
-                    
-                    <label for="nome">Tipo:</label>
-                    <input type="text" name="tipo" value="{{ $transacao->tipo }}">
-            
+
+                    @if ($errors->any())
+                        <ul class="erros">
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    <label for="tipo">Tipo:</label>
+                    <select name="tipo">
+                        <option value="Receitas" {{ $transacao->tipo == 'Receitas' ? 'selected' : '' }}>Receitas</option>
+                        <option value="Despesas" {{ $transacao->tipo == 'Despesas' ? 'selected' : '' }}>Despesas</option>
+                    </select>
+
                     <label for="descricao">Descrição:</label>
                     <input type="text" name="descricao" value="{{ $transacao->descricao }}">
-            
+
                     <label for="valor">Valor:</label>
-                    <input type="text" name="valor" value="{{ $transacao->valor }}">
+                    <input type="number" step="0.01" min="0" name="valor" value="{{ $transacao->valor }}">
 
                     <div class="fundo-caixa-formulario-selecoes">
                         <select name="categoria_id">
                             @foreach ($categorias as $c)
-                                <option 
+                                <option
                                 value="{{ $c->id }}"
                                 {{ $c->id == $transacao->categoria_id ? 'selected' : '' }}>
                                 {{ $c->nome }}</option>
-                            @endforeach
-                        </select>
-                
-                        <select name="usuario_id">
-                            @foreach ($usuarios as $u)
-                                <option value="{{ $u->id }}" {{ $u->id == $transacao->usuario_id ? 'selected' : '' }}>{{ $u->nome }}</option>
                             @endforeach
                         </select>
                     </div>
