@@ -1,0 +1,468 @@
+/* ============================================================
+   Economiza Aí — Painel (tema escuro)
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --bg: #0b1220;
+    --bg-2: #0f1830;
+    --card: #131c31;
+    --card-2: #16203a;
+    --borda: rgba(255, 255, 255, 0.07);
+    --texto: #e6ebf5;
+    --texto-mut: #8b97ad;
+    --azul: #3b82f6;
+    --azul-2: #2f6bff;
+    --verde: #22c55e;
+    --vermelho: #ef4444;
+}
+
+body.painel {
+    display: flex;
+    min-height: 100vh;
+    background:
+        radial-gradient(1200px 600px at 100% -10%, rgba(47, 107, 255, 0.12), transparent 60%),
+        var(--bg);
+    color: var(--texto);
+}
+
+/* ----------------------------- Sidebar ----------------------------- */
+.painel-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: var(--bg-2);
+    border-right: 1px solid var(--borda);
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.painel-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--texto);
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0 0.5rem 1.5rem;
+}
+
+.painel-logo-mark {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.6rem;
+    background: linear-gradient(135deg, var(--azul-2), #7aa2ff);
+    color: #fff;
+    font-weight: 800;
+}
+
+.painel-menu-titulo {
+    color: var(--texto-mut);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 1rem 0.75rem 0.5rem;
+}
+
+.painel-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.painel-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.65rem;
+    color: var(--texto-mut);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+.painel-nav-item svg {
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
+.painel-nav-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--texto);
+}
+
+.painel-nav-item.ativo {
+    background: linear-gradient(135deg, var(--azul-2), var(--azul));
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(47, 107, 255, 0.35);
+}
+
+.painel-sidebar-rodape {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--borda);
+}
+
+.painel-usuario {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+}
+
+.painel-avatar {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--azul-2), #7aa2ff);
+    color: #fff;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.painel-usuario-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.painel-usuario-info strong {
+    font-size: 0.88rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.painel-usuario-info small {
+    color: var(--texto-mut);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.painel-sair {
+    width: 100%;
+    padding: 0.55rem;
+    border: 1px solid var(--borda);
+    border-radius: 0.6rem;
+    background: transparent;
+    color: var(--texto-mut);
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all 0.15s;
+}
+
+.painel-sair:hover {
+    color: #fff;
+    border-color: var(--vermelho);
+    background: rgba(239, 68, 68, 0.12);
+}
+
+/* ------------------------------ Main ------------------------------ */
+.painel-main {
+    flex: 1;
+    min-width: 0;
+    padding: 1.75rem 2rem;
+}
+
+.painel-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+}
+
+.painel-topo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.painel-topo-sub {
+    color: var(--texto-mut);
+    font-size: 0.9rem;
+    margin-top: 0.15rem;
+}
+
+.painel-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--azul-2), var(--azul));
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.6rem 1.15rem;
+    border-radius: 0.65rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 6px 16px rgba(47, 107, 255, 0.3);
+    transition: filter 0.15s;
+}
+
+.painel-btn:hover {
+    filter: brightness(1.1);
+}
+
+.painel-alerta {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #bff0cf;
+    padding: 0.75rem 1rem;
+    border-radius: 0.65rem;
+    margin-bottom: 1.25rem;
+}
+
+/* ------------------------------ Cards ----------------------------- */
+.painel-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.painel-card {
+    background: var(--card);
+    border: 1px solid var(--borda);
+    border-radius: 1rem;
+    padding: 1.4rem 1.5rem;
+}
+
+.painel-card-destaque {
+    background: linear-gradient(135deg, #16223f, #101a30);
+}
+
+.painel-card-rotulo {
+    color: var(--texto-mut);
+    font-size: 0.82rem;
+}
+
+.painel-card-valor {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+.positivo { color: var(--verde); }
+.negativo { color: var(--vermelho); }
+
+/* ------------------------------ Blocos ---------------------------- */
+.painel-bloco {
+    background: var(--card);
+    border: 1px solid var(--borda);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.painel-bloco-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.painel-bloco-cabecalho h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.painel-grafico {
+    position: relative;
+    height: 300px;
+}
+
+/* ------------------------------ Filtros --------------------------- */
+.painel-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.painel-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+    min-width: 9rem;
+}
+
+.painel-filtro label {
+    color: var(--texto-mut);
+    font-size: 0.78rem;
+}
+
+.painel-filtro input,
+.painel-filtro select {
+    background: var(--bg-2);
+    border: 1px solid var(--borda);
+    border-radius: 0.6rem;
+    padding: 0.55rem 0.7rem;
+    color: var(--texto);
+    font-size: 0.9rem;
+    color-scheme: dark;
+}
+
+.painel-filtro input:focus,
+.painel-filtro select:focus {
+    outline: none;
+    border-color: var(--azul);
+}
+
+/* ------------------------------ Tabela ---------------------------- */
+.painel-tabela-wrap {
+    overflow-x: auto;
+}
+
+.painel-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.painel-tabela thead th {
+    text-align: left;
+    color: var(--texto-mut);
+    font-weight: 500;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--borda);
+}
+
+.painel-tabela tbody td {
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid var(--borda);
+}
+
+.painel-tabela tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.painel-tag {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tag-receita {
+    background: rgba(34, 197, 94, 0.15);
+    color: #7ee2a3;
+}
+
+.tag-despesa {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f6a3a3;
+}
+
+.painel-tabela-acoes a {
+    color: var(--azul);
+    text-decoration: none;
+    margin-right: 0.75rem;
+}
+
+.painel-tabela-acoes a:hover {
+    text-decoration: underline;
+}
+
+.painel-tabela-vazia {
+    text-align: center;
+    color: var(--texto-mut);
+    padding: 2rem !important;
+}
+
+/* ---------------------------- Paginação --------------------------- */
+.painel-paginacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.painel-pag-item {
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--borda);
+    color: var(--texto);
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.painel-pag-item:hover {
+    border-color: var(--azul);
+}
+
+.painel-pag-item.desabilitado {
+    color: var(--texto-mut);
+    opacity: 0.5;
+}
+
+.painel-pag-info {
+    color: var(--texto-mut);
+    font-size: 0.85rem;
+}
+
+/* --------------------------- Responsivo --------------------------- */
+@media (max-width: 820px) {
+    body.painel {
+        flex-direction: column;
+    }
+
+    .painel-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .painel-menu-titulo {
+        display: none;
+    }
+
+    .painel-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .painel-sidebar-rodape {
+        margin: 0 0 0 auto;
+        border: none;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .painel-usuario {
+        margin: 0;
+    }
+
+    .painel-main {
+        padding: 1.25rem;
+    }
+}

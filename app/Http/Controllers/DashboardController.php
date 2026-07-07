@@ -45,8 +45,39 @@ class DashboardController extends Controller
             ->withQueryString();
 
         $categorias = Auth::user()->categorias()->get();
+        $grafico = $this->serieMensal();
 
-        return compact('transacoes', 'categorias', 'saldo', 'receitas', 'despesas');
+        return compact('transacoes', 'categorias', 'saldo', 'receitas', 'despesas', 'grafico');
+    }
+
+    /**
+     * Série de receitas x despesas dos últimos 6 meses (sempre do usuário
+     * logado, independentemente dos filtros da tabela), para o gráfico.
+     *
+     * @return array{labels: string[], receitas: float[], despesas: float[]}
+     */
+    private function serieMensal(): array
+    {
+        $meses = ['', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        $inicio = now()->startOfMonth()->subMonths(5);
+
+        $labels = [];
+        $receitas = [];
+        $despesas = [];
+
+        for ($i = 0; $i < 6; $i++) {
+            $mes = (clone $inicio)->addMonths($i);
+            $labels[] = $meses[$mes->month] . '/' . $mes->format('y');
+
+            $base = Auth::user()->transacoes()
+                ->whereYear('created_at', $mes->year)
+                ->whereMonth('created_at', $mes->month);
+
+            $receitas[] = (float) (clone $base)->where('tipo', 'Receitas')->sum('valor');
+            $despesas[] = (float) (clone $base)->where('tipo', 'Despesas')->sum('valor');
+        }
+
+        return compact('labels', 'receitas', 'despesas');
     }
 
     /**
