@@ -26,6 +26,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'trial_ends_at',
+        'assinatura_ativa_ate',
         'termos_aceitos_em',
     ];
 
@@ -82,7 +83,50 @@ class Usuario extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'trial_ends_at' => 'datetime',
+            'assinatura_ativa_ate' => 'datetime',
             'termos_aceitos_em' => 'datetime',
         ];
+    }
+
+    /**
+     * O usuário tem acesso liberado se a assinatura paga está vigente ou se
+     * ainda está dentro do período de teste.
+     */
+    public function assinaturaAtiva(): bool
+    {
+        if ($this->assinatura_ativa_ate && $this->assinatura_ativa_ate->isFuture()) {
+            return true;
+        }
+
+        return $this->trial_ends_at && $this->trial_ends_at->isFuture();
+    }
+
+    /**
+     * Estado atual da assinatura: 'ativa' (paga), 'trial' (em teste) ou
+     * 'expirada' (sem acesso).
+     */
+    public function statusAssinatura(): string
+    {
+        if ($this->assinatura_ativa_ate && $this->assinatura_ativa_ate->isFuture()) {
+            return 'ativa';
+        }
+
+        if ($this->trial_ends_at && $this->trial_ends_at->isFuture()) {
+            return 'trial';
+        }
+
+        return 'expirada';
+    }
+
+    /**
+     * Dias restantes do período de teste (0 se já acabou).
+     */
+    public function diasRestantesTrial(): int
+    {
+        if (! $this->trial_ends_at || $this->trial_ends_at->isPast()) {
+            return 0;
+        }
+
+        return (int) ceil(now()->floatDiffInDays($this->trial_ends_at));
     }
 }
