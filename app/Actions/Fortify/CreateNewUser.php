@@ -32,6 +32,10 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(Usuario::class),
             ],
             'password' => $this->passwordRules(),
+            // consentimento LGPD: o checkbox precisa vir marcado.
+            'aceite_termos' => ['accepted'],
+        ], [
+            'aceite_termos.accepted' => 'É preciso aceitar os Termos de Uso e a Política de Privacidade.',
         ])->validate();
 
         $usuario = Usuario::create([
@@ -40,6 +44,8 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
             // período de teste inicial; a lógica de billing entra na Fase 3/4
             'trial_ends_at' => now()->addDays(14),
+            // registra o momento do consentimento (LGPD)
+            'termos_aceitos_em' => now(),
         ]);
 
         $this->criarCategoriasPadrao($usuario);

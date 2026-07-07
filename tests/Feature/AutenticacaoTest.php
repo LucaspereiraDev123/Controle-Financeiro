@@ -39,12 +39,14 @@ class AutenticacaoTest extends TestCase
             'email' => 'novo@teste.com',
             'password' => 'SenhaForte123',
             'password_confirmation' => 'SenhaForte123',
+            'aceite_termos' => '1',
         ]);
 
         $usuario = Usuario::where('email', 'novo@teste.com')->first();
 
         $this->assertNotNull($usuario);
         $this->assertNotNull($usuario->trial_ends_at);
+        $this->assertNotNull($usuario->termos_aceitos_em, 'Deve registrar o aceite dos termos');
         $this->assertNull($usuario->email_verified_at, 'E-mail deve começar não verificado');
         $this->assertCount(6, $usuario->categorias, 'Deve criar as categorias padrão');
     }
@@ -146,6 +148,7 @@ class AutenticacaoTest extends TestCase
             'email' => 'novo@teste.com',
             'password' => 'SenhaForte123',
             'password_confirmation' => 'SenhaForte123',
+            'aceite_termos' => '1',
         ]);
 
         $usuario = Usuario::where('email', 'novo@teste.com')->first();
@@ -162,5 +165,36 @@ class AutenticacaoTest extends TestCase
         $this->post('/forgot-password', ['email' => $usuario->email]);
 
         Notification::assertSentTo($usuario, RedefinirSenhaNotification::class);
+    }
+
+    public function test_registro_exige_aceite_dos_termos(): void
+    {
+        $resposta = $this->post('/register', [
+            'nome' => 'Sem Aceite',
+            'email' => 'semaceite@teste.com',
+            'password' => 'SenhaForte123',
+            'password_confirmation' => 'SenhaForte123',
+            // sem aceite_termos
+        ]);
+
+        $resposta->assertSessionHasErrors('aceite_termos');
+        $this->assertNull(Usuario::where('email', 'semaceite@teste.com')->first());
+    }
+
+    public function test_paginas_publicas_abrem_para_visitantes(): void
+    {
+        $this->get(route('home'))->assertOk();
+        $this->get(route('planos'))->assertOk();
+        $this->get(route('termos'))->assertOk();
+        $this->get(route('privacidade'))->assertOk();
+    }
+
+    public function test_home_redireciona_usuario_logado_para_dashboard(): void
+    {
+        $usuario = $this->novoUsuario();
+
+        $this->actingAs($usuario)
+            ->get(route('home'))
+            ->assertRedirect(route('dashboard'));
     }
 }
