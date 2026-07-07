@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'assinatura' => AssinaturaAtiva::class,
         ]);
+
+        // O webhook do Mercado Pago é chamado pelo MP (sem token CSRF).
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/mercadopago',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

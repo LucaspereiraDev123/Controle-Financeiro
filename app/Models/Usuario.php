@@ -27,6 +27,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         'password',
         'trial_ends_at',
         'assinatura_ativa_ate',
+        'mp_preapproval_id',
         'termos_aceitos_em',
     ];
 
