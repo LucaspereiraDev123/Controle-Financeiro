@@ -10,19 +10,30 @@
 <body>
     <div class="fundo">
         <div class="fundo-caixa">
-            <form class="fundo-caixa-formulario" method="POST" > 
+            <form class="fundo-caixa-formulario" method="POST" action="{{ route('usuarios.registerStore') }}">
                 @csrf
                     <h1>Faça seu Registro</h1>
 
+                    @if ($errors->any())
+                        <ul class="erros">
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" id="nome">
-    
+                    <input type="text" name="nome" id="nome" value="{{ old('nome') }}">
+
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email">
+                    <input type="email" name="email" id="email" value="{{ old('email') }}">
 
                     <label for="password">Senha</label>
                     <input type="password" name="password" id="password">
-    
+
+                    <label for="password_confirmation">Confirmar Senha</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation">
+
                     <button>Registrar</button>
                     <a href="{{ route('login') }}">Ja possui conta ?</a>
             </form>

@@ -11,12 +11,20 @@
 <body>
     <div class="fundo">
         <div class="fundo-caixa">
-            <form class='fundo-caixa-formulario' method="POST" > 
+            <form class='fundo-caixa-formulario' method="POST" action="{{ route('signin') }}">
                 @csrf
                     <h1>Economiza Aí</h1>
 
-                    <label for="email" value="{{ old('email') }}">E-mail</label>
-                    <input type="email" name="email" id="email">
+                    @if ($errors->any())
+                        <ul class="erros">
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email" id="email" value="{{ old('email') }}">
     
                     <label for="password">Senha</label>
                     <input type="password" name="password" id="password">

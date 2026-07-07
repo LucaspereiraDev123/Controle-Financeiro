@@ -17,11 +17,22 @@
                         @method('PUT')
                                 <h1>Atualizar Categoria</h1>
 
+                                @if ($errors->any())
+                                    <ul class="erros">
+                                        @foreach ($errors->all() as $erro)
+                                            <li>{{ $erro }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+
                                 <label for="nome">Nome:</label>
                                 <input type="text" name="nome" value="{{ $categoria->nome }}">
 
                                 <label for="tipo">Tipo:</label>
-                                <input type="text" name="tipo" value="{{ $categoria->tipo }}">
+                                <select name="tipo">
+                                    <option value="Receitas" {{ $categoria->tipo == 'Receitas' ? 'selected' : '' }}>Receitas</option>
+                                    <option value="Despesas" {{ $categoria->tipo == 'Despesas' ? 'selected' : '' }}>Despesas</option>
+                                </select>
 
                                 <!-- quando eu colocar um button fora do form tenho que me atentar se estou chamando o id do formulario com a ação correta -->
                                 <div class="fundo-caixa-formulario-botoes">

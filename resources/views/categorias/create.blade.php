@@ -15,11 +15,22 @@
 
                     <h2>Cadastrar Nova Categoria</h2>
 
+                    @if ($errors->any())
+                        <ul class="erros">
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
                     <label for="nome">Nome:</label>
-                    <input type="text" name="nome">
+                    <input type="text" name="nome" value="{{ old('nome') }}">
 
                     <label for="tipo">Tipo:</label>
-                    <input type="text" name="tipo">
+                    <select name="tipo">
+                        <option value="Receitas" {{ old('tipo') == 'Receitas' ? 'selected' : '' }}>Receitas</option>
+                        <option value="Despesas" {{ old('tipo') == 'Despesas' ? 'selected' : '' }}>Despesas</option>
+                    </select>
 
                     <button type="submit" value="Salvar">Salvar</button>
                     <button type="reset" value="Limpar">Limpar</button>

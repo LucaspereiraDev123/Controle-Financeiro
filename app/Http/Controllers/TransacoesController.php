@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transacao;
 use App\Models\Categoria;
-use App\Models\Usuario;
-// use Illuminate\Support\Facades\Auth;
-// use Illuminate\Auth\AuthencationExcption;
+use Illuminate\Support\Facades\Auth;
 
 class TransacoesController extends Controller
 {
@@ -16,24 +14,22 @@ class TransacoesController extends Controller
      */
     public function index()
     {
-        // if (!Auth::check()) {
-        //     throw new AuthenticationException();
-        // }
+        $transacoes = Auth::user()->transacoes()
+            ->with('categoria')
+            ->orderByDesc('created_at')
+            ->paginate(20);
 
-        $transacoes = Transacao::all();
-        return view('/transacoes.index')->with('transacoes', $transacoes);
+        return view('transacoes.index')->with('transacoes', $transacoes);
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {   
-        $categorias = Categoria::all();
-        $usuarios = Usuario::all();
-        return view('transacoes.create')
-            ->with('categorias', $categorias)
-                ->with('usuarios', $usuarios);
+    {
+        $categorias = Auth::user()->categorias()->get();
+
+        return view('transacoes.create')->with('categorias', $categorias);
     }
 
     /**
@@ -41,92 +37,80 @@ class TransacoesController extends Controller
      */
     public function store(Request $request)
     {
-        $transacao = new Transacao();
+        $dados = $this->validarTransacao($request);
+        $dados['usuario_id'] = Auth::id();
 
-        $transacao->tipo = $request->input('tipo');
-        $transacao->descricao = $request->input('descricao');
-        $transacao->valor = $request->input('valor');
-        $transacao->categoria_id = $request->input('categoria_id');
-        $transacao->usuario_id = $request->input('usuario_id');
+        Transacao::create($dados);
 
-        $transacao->save();
-
-        $transacoes = Transacao::all();
-        $categorias = Categoria::all();
-
-        return view('dashboard.index')->with('transacoes', $transacoes)
-            ->with('categorias', $categorias)
-                ->with('msg', 'Transação cadastrada com sucesso');
-
+        return redirect()->route('dashboard')
+            ->with('msg', 'Transação cadastrada com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Transacao $transacao)
     {
-        $transacao = Transacao::find($id);
+        $this->authorize('view', $transacao);
 
-        if ($transacao) {
-            return view('transacoes.show')->with('transacao', $transacao);
-        } else {
-            return view('transacoes.show')->with('msg', 'Transação não encontrada!');
-        }
+        return view('transacoes.show')->with('transacao', $transacao);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Transacao $transacao)
     {
-        $transacao = Transacao::find($id);
+        $this->authorize('update', $transacao);
 
-        if ($transacao) {
-            $categorias = Categoria::all();
-            $usuarios = Usuario::all();
-            return view('transacoes.edit')->with('transacao', $transacao)
-                ->with('categorias', $categorias)->with('usuarios', $usuarios);
-        } else {
-            $transacoes = Transacao::all();
-            return view('transacoes.edit')->with('transacoes', $transacoes)
-                ->with('msg', 'Transação não econtrada!');
-        }
+        $categorias = Auth::user()->categorias()->get();
+
+        return view('transacoes.edit')->with('transacao', $transacao)
+            ->with('categorias', $categorias);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Transacao $transacao)
     {
-        $transacao = Transacao::find($id);
+        $this->authorize('update', $transacao);
 
-        $transacao->tipo = $request->input('tipo');
-        $transacao->descricao = $request->input('descricao');
-        $transacao->valor = $request->input('valor');
-        $transacao->categoria_id = $request->input('categoria_id');
-        $transacao->usuario_id = $request->input('usuario_id');
+        $transacao->update($this->validarTransacao($request));
 
-        $transacao->save();
-
-        $transacoes = Transacao::all();
-        $categorias = Categoria::all();
-
-        return view('dashboard.index')->with('transacoes', $transacoes)
-            ->with('categorias', $categorias);
+        return redirect()->route('dashboard')
+            ->with('msg', 'Transação atualizada com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Transacao $transacao)
     {
-        $transacao = Transacao::find($id);
+        $this->authorize('delete', $transacao);
 
         $transacao->delete();
 
-        $transacoes = Transacao::all();
-        $categorias = Categoria::all();
-        return view('dashboard.index')->with('transacoes', $transacoes)
-            ->with('categorias', $categorias);
+        return redirect()->route('dashboard')
+            ->with('msg', 'Transação excluída com sucesso!');
+    }
+
+    /**
+     * Valida os campos da transação, garantindo que a categoria
+     * escolhida pertença ao usuário autenticado.
+     */
+    private function validarTransacao(Request $request): array
+    {
+        return $request->validate([
+            'tipo' => ['required', 'string', 'in:Receitas,Despesas'],
+            'descricao' => ['required', 'string', 'max:255'],
+            'valor' => ['required', 'numeric', 'min:0'],
+            'categoria_id' => [
+                'required',
+                'exists:categorias,id,usuario_id,' . Auth::id(),
+            ],
+        ], [
+            'categoria_id.exists' => 'Selecione uma categoria válida.',
+        ]);
     }
 }

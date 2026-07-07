@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -22,7 +23,24 @@ class Usuario extends Authenticatable
         'nome',
         'email',
         'password',
+        'trial_ends_at',
     ];
+
+    /**
+     * Transações que pertencem a este usuário.
+     */
+    public function transacoes(): HasMany
+    {
+        return $this->hasMany(Transacao::class, 'usuario_id');
+    }
+
+    /**
+     * Categorias que pertencem a este usuário.
+     */
+    public function categorias(): HasMany
+    {
+        return $this->hasMany(Categoria::class, 'usuario_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,6 +62,7 @@ class Usuario extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'trial_ends_at' => 'datetime',
         ];
     }
 }

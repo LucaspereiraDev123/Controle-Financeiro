@@ -18,14 +18,25 @@
 
                     <h1>Cadastrar nova Transação</h1>
 
+                    @if ($errors->any())
+                        <ul class="erros">
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
                     <label for="tipo">Tipo:</label>
-                    <input type="text" name="tipo">
-            
+                    <select name="tipo">
+                        <option value="Receitas" {{ old('tipo') == 'Receitas' ? 'selected' : '' }}>Receitas</option>
+                        <option value="Despesas" {{ old('tipo') == 'Despesas' ? 'selected' : '' }}>Despesas</option>
+                    </select>
+
                     <label for="descricao">Descrição:</label>
-                    <input type="text" name="descricao">
-            
+                    <input type="text" name="descricao" value="{{ old('descricao') }}">
+
                     <label for="valor">Valor:</label>
-                    <input type="text" name="valor">
+                    <input type="number" step="0.01" min="0" name="valor" value="{{ old('valor') }}">
 
                     <div class="fundo-caixa-formulario-selecoes">
                         <select name="categoria_id">
@@ -33,14 +44,6 @@
                                 <option value="{{ $c->id }}">{{ $c->nome }}</option>
                             @endforeach
                         </select>
-
-                        <select name="usuario_id">
-                            @foreach ($usuarios as $u)
-                                <option value="{{ $u->id }}">{{ $u->nome }}</option>
-                            @endforeach
-                        </select>
-
-
                     </div>
             
                     <div class="fundo-caixa-formulario-botoes">
