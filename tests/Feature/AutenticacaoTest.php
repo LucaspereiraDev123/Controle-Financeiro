@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\Usuario;
-use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Auth\Notifications\VerifyEmail;
+use App\Notifications\RedefinirSenhaNotification;
+use App\Notifications\VerificarEmailNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class AutenticacaoTest extends TestCase
@@ -113,7 +115,7 @@ class AutenticacaoTest extends TestCase
     {
         $usuario = $this->novoUsuario(verificado: false);
 
-        $mail = (new VerifyEmail())->toMail($usuario);
+        $mail = (new VerificarEmailNotification())->toMail($usuario);
 
         $this->assertStringContainsString('Confirme seu e-mail', $mail->subject);
         $this->assertSame('Confirmar e-mail', $mail->actionText);
@@ -123,9 +125,42 @@ class AutenticacaoTest extends TestCase
     {
         $usuario = $this->novoUsuario();
 
-        $mail = (new ResetPassword('token-de-teste'))->toMail($usuario);
+        $mail = (new RedefinirSenhaNotification('token-de-teste'))->toMail($usuario);
 
         $this->assertStringContainsString('Redefinição de senha', $mail->subject);
         $this->assertSame('Redefinir senha', $mail->actionText);
+    }
+
+    public function test_notificacoes_de_email_sao_enfileiradas(): void
+    {
+        $this->assertInstanceOf(ShouldQueue::class, new VerificarEmailNotification());
+        $this->assertInstanceOf(ShouldQueue::class, new RedefinirSenhaNotification('token'));
+    }
+
+    public function test_registro_dispara_email_de_verificacao(): void
+    {
+        Notification::fake();
+
+        $this->post('/register', [
+            'nome' => 'Novo Usuario',
+            'email' => 'novo@teste.com',
+            'password' => 'SenhaForte123',
+            'password_confirmation' => 'SenhaForte123',
+        ]);
+
+        $usuario = Usuario::where('email', 'novo@teste.com')->first();
+
+        Notification::assertSentTo($usuario, VerificarEmailNotification::class);
+    }
+
+    public function test_solicitar_reset_dispara_notificacao_de_senha(): void
+    {
+        Notification::fake();
+
+        $usuario = $this->novoUsuario();
+
+        $this->post('/forgot-password', ['email' => $usuario->email]);
+
+        Notification::assertSentTo($usuario, RedefinirSenhaNotification::class);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\RedefinirSenhaNotification;
+use App\Notifications\VerificarEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +27,22 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         'password',
         'trial_ends_at',
     ];
+
+    /**
+     * Envia o e-mail de verificação em PT-BR e enfileirado.
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerificarEmailNotification());
+    }
+
+    /**
+     * Envia o e-mail de redefinição de senha em PT-BR e enfileirado.
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new RedefinirSenhaNotification($token));
+    }
 
     /**
      * Transações que pertencem a este usuário.
