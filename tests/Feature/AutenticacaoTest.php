@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Usuario;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -105,5 +107,25 @@ class AutenticacaoTest extends TestCase
 
         $resposta->assertSessionHasNoErrors();
         $resposta->assertSessionHas('status');
+    }
+
+    public function test_email_de_verificacao_esta_em_portugues(): void
+    {
+        $usuario = $this->novoUsuario(verificado: false);
+
+        $mail = (new VerifyEmail())->toMail($usuario);
+
+        $this->assertStringContainsString('Confirme seu e-mail', $mail->subject);
+        $this->assertSame('Confirmar e-mail', $mail->actionText);
+    }
+
+    public function test_email_de_reset_de_senha_esta_em_portugues(): void
+    {
+        $usuario = $this->novoUsuario();
+
+        $mail = (new ResetPassword('token-de-teste'))->toMail($usuario);
+
+        $this->assertStringContainsString('Redefinição de senha', $mail->subject);
+        $this->assertSame('Redefinir senha', $mail->actionText);
     }
 }
