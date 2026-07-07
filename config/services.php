@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'mercadopago' => [
+        'access_token' => env('MP_ACCESS_TOKEN'),
+        'public_key' => env('MP_PUBLIC_KEY'),
+        'webhook_secret' => env('MP_WEBHOOK_SECRET'),
+        // Valor mensal do plano único (em reais).
+        'plano_valor' => (float) env('MP_PLANO_VALOR', 19.90),
+        'plano_nome' => env('MP_PLANO_NOME', 'Assinatura Economiza Aí'),
+    ],
+
 ];
