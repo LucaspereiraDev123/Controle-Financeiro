@@ -25,7 +25,10 @@
                                 <a href="{{ route('transacoes.create') }}">+Nova Transação</a>
                             </li>
                             <li>
-                                <a href="{{ route('logout') }}">Sair</a>
+                                <form method="POST" action="{{ route('logout') }}" class="form-logout">
+                                    @csrf
+                                    <button type="submit">Sair</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
