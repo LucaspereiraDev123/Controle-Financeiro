@@ -1,30 +1,39 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Mostrar</title>
-</head>
-<body>
-    <div class="fundo">
-        <div class="fundo-caixa">
-            <div class="fundo-caixa-exibicaoTransacao">
-                @if (isset($msg))
-                    <h1>Categoria não encontrada</h1>
-                @else
-                    <h1>Transações</h1>
-                    <p>Id: {{ $transacao->id }}</p>
-                    <p>Nome: {{ $transacao->tipo }}</p>
-                    <p>Descrição: {{ $transacao->descricao }}</p>
-                    <p>valor: {{ $transacao->valor }}</p>
-                    <p>Criado em: {{ $transacao->created_at }}</p>
-                    <p>Atualizado em: {{ $transacao->updated_at }}</p>
-                    <a href="{{ route('dashboard') }}">Voltar</a>
-                @endif
+<x-painel.layout titulo="Transação" cabecalho="Detalhes da transação">
+    <x-painel.bloco estreito>
+        @if (isset($msg))
+            <p>Transação não encontrada.</p>
+        @else
+            <div class="painel-detalhe">
+                <div class="painel-detalhe-linha">
+                    <span>Tipo</span>
+                    <strong><x-painel.tag :tipo="$transacao->tipo" /></strong>
+                </div>
+                <div class="painel-detalhe-linha">
+                    <span>Descrição</span>
+                    <strong>{{ $transacao->descricao }}</strong>
+                </div>
+                <div class="painel-detalhe-linha">
+                    <span>Valor</span>
+                    <strong class="{{ $transacao->tipo === 'Receitas' ? 'positivo' : 'negativo' }}">R$ {{ number_format($transacao->valor, 2, ',', '.') }}</strong>
+                </div>
+                <div class="painel-detalhe-linha">
+                    <span>Categoria</span>
+                    <strong>{{ $transacao->categoria->nome }}</strong>
+                </div>
+                <div class="painel-detalhe-linha">
+                    <span>Criado em</span>
+                    <strong>{{ $transacao->created_at->format('d/m/Y H:i') }}</strong>
+                </div>
+                <div class="painel-detalhe-linha">
+                    <span>Atualizado em</span>
+                    <strong>{{ $transacao->updated_at->format('d/m/Y H:i') }}</strong>
+                </div>
             </div>
-        </div>
-    </div>
-</body>
-</html>
+
+            <div class="painel-form-acoes">
+                <x-painel.botao :href="route('transacoes.edit', $transacao->id)">Editar</x-painel.botao>
+                <x-painel.botao :href="route('dashboard')" variante="sec">Voltar</x-painel.botao>
+            </div>
+        @endif
+    </x-painel.bloco>
+</x-painel.layout>

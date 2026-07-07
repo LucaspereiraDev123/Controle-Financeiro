@@ -1,41 +1,24 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Index</title>
-</head>
-<body>
+<x-painel.layout titulo="Categorias" cabecalho="Categorias" subcabecalho="Organize seus lançamentos por categoria" nav="categorias">
+    <x-slot:acoes>
+        <x-painel.botao :href="route('categorias.create')">+ Nova categoria</x-painel.botao>
+    </x-slot:acoes>
 
-            <h2>Categorias Cadastradas</h2>
-        
-         
-        @if (!isset($categorias))
-             <h3>Nenhuma Categoria encontrada! :/<h3>
-        @else
-        
-            <table>
+    <x-painel.bloco>
+        <x-painel.tabela :colunas="['Tipo', 'Nome', 'Opções']">
+            @forelse ($categorias as $c)
                 <tr>
-                    <th>tipo</th>
-                    <th>nome</th>
-                    <th>Opcões</th>
+                    <td><x-painel.tag :tipo="$c->tipo" /></td>
+                    <td>{{ $c->nome }}</td>
+                    <td class="painel-tabela-acoes">
+                        <a href="{{ route('categorias.show', $c->id) }}">Mostrar</a>
+                        <a href="{{ route('categorias.edit', $c->id) }}">Editar</a>
+                    </td>
                 </tr>
-                <tbody>
-                    @foreach ($categorias as $c)
-                    <tr>
-                        <th>{{ $c->tipo }}</th>
-                        <th>{{ $c->nome }}</th>
-                        <th><a href=" {{ route('categorias.show', $c->id) }}">Mostrar</a></th>
-                        <th><a href=" {{ route('categorias.edit', $c->id) }}">Editar</a></th>
-                    <tr>
-                    @endforeach
-                </tbody>
-            </table>
-        
-        <a href=" {{ route('categorias.create') }}">Criar nova categoria</a>
-        <a href=" {{ route('dashboard') }}">Voltar</a>
-        @endif
-</body>
-</html>
+            @empty
+                <tr>
+                    <td colspan="3" class="painel-tabela-vazia">Nenhuma categoria encontrada.</td>
+                </tr>
+            @endforelse
+        </x-painel.tabela>
+    </x-painel.bloco>
+</x-painel.layout>

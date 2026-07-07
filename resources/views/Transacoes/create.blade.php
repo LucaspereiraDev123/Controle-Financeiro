@@ -1,60 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Nova Transação</title>
-</head>
-<body>
-    <div class="fundo">
-        <div class="fundo-caixa">
-    
-            
+<x-painel.layout titulo="Nova transação" cabecalho="Nova transação" subcabecalho="Cadastre uma receita ou despesa" nav="nova">
+    <x-painel.bloco estreito>
+        <form class="painel-form" method="POST" action="{{ route('transacoes.store') }}">
+            @csrf
 
-            <form class="fundo-caixa-formulario" method="POST" action="{{ route('transacoes.store') }}">
-                @csrf
+            <x-painel.erros />
 
-                    <h1>Cadastrar nova Transação</h1>
+            <x-form.select name="tipo" label="Tipo">
+                <option value="Receitas" @selected(old('tipo') === 'Receitas')>Receitas</option>
+                <option value="Despesas" @selected(old('tipo') === 'Despesas')>Despesas</option>
+            </x-form.select>
 
-                    @if ($errors->any())
-                        <ul class="erros">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
+            <x-form.campo name="descricao" label="Descrição" placeholder="Ex: Netflix" />
 
-                    <label for="tipo">Tipo:</label>
-                    <select name="tipo">
-                        <option value="Receitas" {{ old('tipo') == 'Receitas' ? 'selected' : '' }}>Receitas</option>
-                        <option value="Despesas" {{ old('tipo') == 'Despesas' ? 'selected' : '' }}>Despesas</option>
-                    </select>
+            <x-form.campo name="valor" label="Valor (R$)" type="number" step="0.01" min="0" placeholder="0,00" />
 
-                    <label for="descricao">Descrição:</label>
-                    <input type="text" name="descricao" value="{{ old('descricao') }}">
+            <x-form.select name="categoria_id" label="Categoria">
+                @foreach ($categorias as $c)
+                    <option value="{{ $c->id }}" @selected((string) old('categoria_id') === (string) $c->id)>{{ $c->nome }}</option>
+                @endforeach
+            </x-form.select>
 
-                    <label for="valor">Valor:</label>
-                    <input type="number" step="0.01" min="0" name="valor" value="{{ old('valor') }}">
+            <div class="painel-form-acoes">
+                <x-painel.botao type="submit">Salvar</x-painel.botao>
+                <x-painel.botao type="reset" variante="sec">Limpar</x-painel.botao>
+            </div>
 
-                    <div class="fundo-caixa-formulario-selecoes">
-                        <select name="categoria_id">
-                            @foreach ($categorias as $c)
-                                <option value="{{ $c->id }}">{{ $c->nome }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-            
-                    <div class="fundo-caixa-formulario-botoes">
-                        <button type="submit" value="Salvar">Salvar</button>
-                        <button type="reset" value="Limpar">Limpar</button>
-                    </div>
-                    
-                    <a href="{{ route('dashboard') }}">Voltar</a>
-                    <a href="{{ route('categorias.index') }}">Especificações das Categorias</a>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
+            <a href="{{ route('dashboard') }}" class="painel-voltar">← Voltar ao painel</a>
+        </form>
+    </x-painel.bloco>
+</x-painel.layout>
