@@ -26,6 +26,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'trial_ends_at',
+        'termos_aceitos_em',
     ];
 
     /**
@@ -81,6 +82,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'trial_ends_at' => 'datetime',
+            'termos_aceitos_em' => 'datetime',
         ];
     }
 }

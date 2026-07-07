@@ -388,3 +388,297 @@
     width: auto;
     margin: 0;
 }
+
+/* ===================== Consentimento LGPD no registro ===================== */
+.aceite {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #ffffff;
+    margin: 0.6rem 0;
+    max-width: 22rem;
+    text-align: left;
+}
+
+.aceite input {
+    width: auto;
+    margin-top: 0.2rem;
+}
+
+.aceite a {
+    color: #7ec8a0;
+    text-decoration: underline;
+}
+
+/* ============================ Site público ============================== */
+.site {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f6f8;
+    color: #1f2933;
+}
+
+.site-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: rgb(28, 48, 85);
+}
+
+.site-logo {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.site-nav a {
+    color: #e6ebf2;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.site-nav a:hover {
+    color: #ffffff;
+}
+
+.site-btn {
+    background-color: #16a34a;
+    color: #ffffff !important;
+    padding: 0.55rem 1.1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.site-btn:hover {
+    background-color: #12833c;
+}
+
+.site-btn-grande {
+    display: inline-block;
+    padding: 0.85rem 1.8rem;
+    font-size: 1.05rem;
+}
+
+.site-conteudo {
+    flex: 1;
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Hero */
+.site-hero {
+    text-align: center;
+    padding: 2rem 0 3rem;
+}
+
+.site-hero h1 {
+    font-size: 2.4rem;
+    color: rgb(28, 48, 85);
+    margin-bottom: 1rem;
+}
+
+.site-hero-sub {
+    font-size: 1.15rem;
+    max-width: 40rem;
+    margin: 0 auto 1.75rem;
+    line-height: 1.6;
+}
+
+.site-hero-acoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.site-link {
+    color: rgb(28, 48, 85);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.site-link:hover {
+    text-decoration: underline;
+}
+
+.site-hero-nota {
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
+    color: #52606d;
+}
+
+/* Cards de recursos */
+.site-recursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.site-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.site-card h3 {
+    color: rgb(28, 48, 85);
+    margin-bottom: 0.5rem;
+}
+
+.site-card p {
+    line-height: 1.5;
+    color: #3e4c59;
+}
+
+/* Planos */
+.site-planos {
+    text-align: center;
+}
+
+.site-planos h1 {
+    color: rgb(28, 48, 85);
+    margin-bottom: 0.5rem;
+}
+
+.site-planos-sub {
+    color: #52606d;
+    margin-bottom: 2rem;
+}
+
+.site-plano {
+    background-color: #ffffff;
+    border: 2px solid rgb(28, 48, 85);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 24rem;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.site-plano h2 {
+    color: rgb(28, 48, 85);
+}
+
+.site-plano-preco {
+    margin: 1rem 0 1.5rem;
+}
+
+.site-plano-valor {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #16a34a;
+}
+
+.site-plano-periodo {
+    color: #52606d;
+}
+
+.site-plano-itens {
+    list-style: none;
+    text-align: left;
+    margin: 0 0 1.5rem;
+    padding: 0;
+}
+
+.site-plano-itens li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e4e7eb;
+}
+
+.site-plano-itens li::before {
+    content: "✓ ";
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.site-plano-nota {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #52606d;
+}
+
+/* Páginas legais */
+.site-legal {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    padding: 2.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    line-height: 1.7;
+}
+
+.site-legal h1 {
+    color: rgb(28, 48, 85);
+    margin-bottom: 0.25rem;
+}
+
+.site-legal h2 {
+    color: rgb(28, 48, 85);
+    margin: 1.75rem 0 0.5rem;
+    font-size: 1.2rem;
+}
+
+.site-legal-data {
+    color: #7b8794;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.site-legal-aviso {
+    background-color: #fff7e6;
+    border: 1px solid #f0c674;
+    border-radius: 0.5rem;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.site-legal ul {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.site-legal a {
+    color: #16a34a;
+}
+
+/* Rodapé */
+.site-rodape {
+    background-color: rgb(28, 48, 85);
+    color: #cbd5e1;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.site-rodape-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.site-rodape-links a {
+    color: #e6ebf2;
+    text-decoration: none;
+}
+
+.site-rodape-links a:hover {
+    text-decoration: underline;
+}

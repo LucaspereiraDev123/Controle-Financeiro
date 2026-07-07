@@ -34,6 +34,14 @@
                     <label for="password_confirmation">Confirmar Senha</label>
                     <input type="password" name="password_confirmation" id="password_confirmation">
 
+                    <label class="aceite">
+                        <input type="checkbox" name="aceite_termos" value="1" {{ old('aceite_termos') ? 'checked' : '' }}>
+                        <span>Li e aceito os
+                            <a href="{{ route('termos') }}" target="_blank">Termos de Uso</a> e a
+                            <a href="{{ route('privacidade') }}" target="_blank">Política de Privacidade</a>.
+                        </span>
+                    </label>
+
                     <button>Registrar</button>
                     <a href="{{ route('login') }}">Ja possui conta ?</a>
             </form>
