@@ -1,46 +1,22 @@
+<x-auth.layout titulo="Entrar" subtitulo="Acesse sua conta para continuar">
+    <form class="painel-form auth-form" method="POST" action="{{ route('login') }}">
+        @csrf
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
-</head>
-<body>
-    <div class="fundo">
-        <div class="fundo-caixa">
-            <form class='fundo-caixa-formulario' method="POST" action="{{ route('login') }}">
-                @csrf
-                    <h1>Economiza Aí</h1>
+        <x-painel.erros />
 
-                    @if ($errors->any())
-                        <ul class="erros">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
+        <x-form.campo name="email" label="E-mail" type="email" />
 
-                    <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" value="{{ old('email') }}">
-    
-                    <label for="password">Senha</label>
-                    <input type="password" name="password" id="password">
+        <x-form.campo name="password" label="Senha" type="password" />
 
-                    <label class="lembrar">
-                        <input type="checkbox" name="remember"> Lembrar de mim
-                    </label>
+        <label class="auth-check">
+            <input type="checkbox" name="remember"> Lembrar de mim
+        </label>
 
-                    <button>Entrar</button>
+        <x-painel.botao type="submit">Entrar</x-painel.botao>
 
-                    <a href="{{ route('password.request') }}">Esqueci minha senha</a>
-                    <a href="{{ route('register') }}">Registrar</a>
-
-            </form>
+        <div class="auth-links">
+            <a href="{{ route('password.request') }}">Esqueci minha senha</a>
+            <a href="{{ route('register') }}">Criar uma conta</a>
         </div>
-        <p>Feito por Lucas Pereira Rocha</p>
-    </div>
-</body>
-</html>
+    </form>
+</x-auth.layout>

@@ -1,26 +1,21 @@
-@extends('layouts.publico')
+<x-auth.layout titulo="Seu período de teste terminou" subtitulo="Para continuar usando o Economiza Aí e manter o controle das suas finanças, escolha um plano e reative seu acesso.">
+    <div class="auth-status" style="background: rgba(240,198,116,0.12); border-color: rgba(240,198,116,0.4); color: #f0c674;">
+        Status atual da sua conta: <strong>{{ ucfirst($status) }}</strong>
+    </div>
 
-@section('titulo', 'Assine para continuar')
+    <div class="auth-form">
+        <x-painel.botao :href="route('planos')">Ver planos</x-painel.botao>
+    </div>
 
-@section('conteudo')
-    <section class="site-assinatura">
-        <h1>Seu período de teste terminou</h1>
-        <p class="site-assinatura-sub">
-            Para continuar usando o Economiza Aí e manter o controle das suas finanças,
-            escolha um plano e reative seu acesso.
-        </p>
+    <p class="auth-texto" style="margin-top: 1.25rem; margin-bottom: 0;">
+        Assim que a cobrança estiver disponível, você poderá assinar por aqui.
+        Seus dados continuam salvos e voltam a ficar acessíveis após a assinatura.
+    </p>
 
-        <div class="site-assinatura-status">
-            Status atual da sua conta: <strong>{{ ucfirst($status) }}</strong>
-        </div>
-
-        <div class="site-hero-acoes">
-            <a href="{{ route('planos') }}" class="site-btn site-btn-grande">Ver planos</a>
-        </div>
-
-        <p class="site-assinatura-nota">
-            Assim que a cobrança estiver disponível, você poderá assinar por aqui.
-            Seus dados continuam salvos e voltam a ficar acessíveis após a assinatura.
-        </p>
-    </section>
-@endsection
+    <div class="auth-links">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="painel-btn-sec">Sair</button>
+        </form>
+    </div>
+</x-auth.layout>

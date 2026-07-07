@@ -55,4 +55,12 @@ class TelasAppTest extends TestCase
         $this->actingAs($usuario)->get(route('categorias.show', $categoria->id))->assertOk();
         $this->actingAs($usuario)->get(route('categorias.edit', $categoria->id))->assertOk();
     }
+
+    public function test_telas_de_acesso_renderizam(): void
+    {
+        $this->get(route('login'))->assertOk();
+        $this->get(route('register'))->assertOk();
+        $this->get(route('password.request'))->assertOk();
+        $this->get(route('password.reset', ['token' => 'abc123']))->assertOk();
+    }
 }
