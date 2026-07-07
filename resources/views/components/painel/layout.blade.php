@@ -1,12 +1,18 @@
+@props([
+    'titulo' => 'Painel',
+    'cabecalho' => 'Painel',
+    'subcabecalho' => null,
+    'nav' => null,
+])
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('titulo', 'Painel') — Economiza Aí</title>
+    <title>{{ $titulo }} — Economiza Aí</title>
     <link rel="stylesheet" href="{{ asset('css/painel.css') }}">
     <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
-    @stack('head')
+    {{ $head ?? '' }}
 </head>
 <body class="painel">
     <aside class="painel-sidebar">
@@ -17,15 +23,15 @@
 
         <p class="painel-menu-titulo">Menu</p>
         <nav class="painel-nav">
-            <a href="{{ route('dashboard') }}" class="painel-nav-item @yield('nav_dashboard')">
+            <a href="{{ route('dashboard') }}" class="painel-nav-item {{ $nav === 'dashboard' ? 'ativo' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
                 <span>Início</span>
             </a>
-            <a href="{{ route('categorias.index') }}" class="painel-nav-item @yield('nav_categorias')">
+            <a href="{{ route('categorias.index') }}" class="painel-nav-item {{ $nav === 'categorias' ? 'ativo' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
                 <span>Categorias</span>
             </a>
-            <a href="{{ route('transacoes.create') }}" class="painel-nav-item @yield('nav_nova')">
+            <a href="{{ route('transacoes.create') }}" class="painel-nav-item {{ $nav === 'nova' ? 'ativo' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
                 <span>Nova transação</span>
             </a>
@@ -57,19 +63,19 @@
     <main class="painel-main">
         <header class="painel-topo">
             <div>
-                <h1>@yield('cabecalho', 'Painel')</h1>
-                <p class="painel-topo-sub">@yield('subcabecalho')</p>
+                <h1>{{ $cabecalho }}</h1>
+                @if($subcabecalho)
+                    <p class="painel-topo-sub">{{ $subcabecalho }}</p>
+                @endif
             </div>
-            <div class="painel-topo-acoes">
-                @yield('topo_acoes')
-            </div>
+            <div class="painel-topo-acoes">{{ $acoes ?? '' }}</div>
         </header>
 
         <div class="painel-conteudo">
-            @yield('conteudo')
+            {{ $slot }}
         </div>
     </main>
 
-    @stack('scripts')
+    {{ $scripts ?? '' }}
 </body>
 </html>

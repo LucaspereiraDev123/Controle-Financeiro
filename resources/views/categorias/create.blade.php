@@ -1,43 +1,23 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Categorias</title>
-</head>
-<body>
-    <div class="fundo">
-        <div class="fundo-caixa">     
-                <form class='fundo-caixa-formulario' method="POST" action="{{ route('categorias.store') }}"> 
-                   @csrf
+<x-painel.layout titulo="Nova categoria" cabecalho="Nova categoria" subcabecalho="Crie uma categoria de receita ou despesa" nav="categorias">
+    <x-painel.bloco estreito>
+        <form class="painel-form" method="POST" action="{{ route('categorias.store') }}">
+            @csrf
 
-                    <h2>Cadastrar Nova Categoria</h2>
+            <x-painel.erros />
 
-                    @if ($errors->any())
-                        <ul class="erros">
-                            @foreach ($errors->all() as $erro)
-                                <li>{{ $erro }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
+            <x-form.campo name="nome" label="Nome" placeholder="Ex: Alimentação" />
 
-                    <label for="nome">Nome:</label>
-                    <input type="text" name="nome" value="{{ old('nome') }}">
+            <x-form.select name="tipo" label="Tipo">
+                <option value="Receitas" @selected(old('tipo') === 'Receitas')>Receitas</option>
+                <option value="Despesas" @selected(old('tipo') === 'Despesas')>Despesas</option>
+            </x-form.select>
 
-                    <label for="tipo">Tipo:</label>
-                    <select name="tipo">
-                        <option value="Receitas" {{ old('tipo') == 'Receitas' ? 'selected' : '' }}>Receitas</option>
-                        <option value="Despesas" {{ old('tipo') == 'Despesas' ? 'selected' : '' }}>Despesas</option>
-                    </select>
+            <div class="painel-form-acoes">
+                <x-painel.botao type="submit">Salvar</x-painel.botao>
+                <x-painel.botao type="reset" variante="sec">Limpar</x-painel.botao>
+            </div>
 
-                    <button type="submit" value="Salvar">Salvar</button>
-                    <button type="reset" value="Limpar">Limpar</button>
-                    <a href="{{ route('categorias.index') }}">Voltar</a>
-                </form> 
-        <div>
-    <div>
-</body>
-</html>
-        
+            <a href="{{ route('categorias.index') }}" class="painel-voltar">← Voltar às categorias</a>
+        </form>
+    </x-painel.bloco>
+</x-painel.layout>

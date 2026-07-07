@@ -1,54 +1,30 @@
-@extends('base')
-@section('principal')
-    <h2>Transações Cadastradas</h2>
+<x-painel.layout titulo="Transações" cabecalho="Transações cadastradas" subcabecalho="Todos os seus lançamentos">
+    <x-slot:acoes>
+        <x-painel.botao :href="route('transacoes.create')">+ Nova transação</x-painel.botao>
+    </x-slot:acoes>
 
-    @if ($transacoes->isEmpty())
-        <h3>Nenhuma Transação encontrada! :/</h3>
-    @else
-    <table>
-        <thead>
-            <tr>
-                <th>Tipo</th>
-                <th>Descrição</th>
-                <th>Valor R$</th>
-                <th>Categoria</th>
-                <th>Opções</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($transacoes as $t)
-            <tr>
-                <td>{{ $t->tipo }}</td>
-                <td>{{ $t->descricao }}</td>
-                <td>{{ number_format($t->valor, 2, ',', '.') }}</td>
-                <td>{{ $t->categoria->nome }}</td>
-                <td>
-                    <a href="{{ route('transacoes.show', $t->id) }}">Mostrar</a> |
-                    <a href="{{ route('transacoes.edit', $t->id) }}">Editar</a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <x-painel.bloco>
+        <x-painel.tabela :colunas="['Tipo', 'Descrição', 'Valor', 'Categoria', 'Opções']">
+            @forelse ($transacoes as $t)
+                <tr>
+                    <td><x-painel.tag :tipo="$t->tipo" /></td>
+                    <td>{{ $t->descricao }}</td>
+                    <td class="{{ $t->tipo === 'Receitas' ? 'positivo' : 'negativo' }}">
+                        {{ $t->tipo === 'Receitas' ? '+' : '−' }} R$ {{ number_format($t->valor, 2, ',', '.') }}
+                    </td>
+                    <td>{{ $t->categoria->nome }}</td>
+                    <td class="painel-tabela-acoes">
+                        <a href="{{ route('transacoes.show', $t->id) }}">Mostrar</a>
+                        <a href="{{ route('transacoes.edit', $t->id) }}">Editar</a>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="painel-tabela-vazia">Nenhuma transação encontrada.</td>
+                </tr>
+            @endforelse
+        </x-painel.tabela>
 
-    @if ($transacoes->hasPages())
-        <div class="paginacao">
-            @if ($transacoes->onFirstPage())
-                <span class="paginacao-item paginacao-desabilitado">Anterior</span>
-            @else
-                <a class="paginacao-item" href="{{ $transacoes->previousPageUrl() }}">Anterior</a>
-            @endif
-
-            <span class="paginacao-info">
-                Página {{ $transacoes->currentPage() }} de {{ $transacoes->lastPage() }}
-            </span>
-
-            @if ($transacoes->hasMorePages())
-                <a class="paginacao-item" href="{{ $transacoes->nextPageUrl() }}">Próxima</a>
-            @else
-                <span class="paginacao-item paginacao-desabilitado">Próxima</span>
-            @endif
-        </div>
-    @endif
-    @endif
-@endsection
+        <x-painel.paginacao :paginator="$transacoes" />
+    </x-painel.bloco>
+</x-painel.layout>

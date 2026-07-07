@@ -1,49 +1,38 @@
-@extends('layouts.painel')
+<x-painel.layout
+    titulo="Início"
+    cabecalho="Bem-vindo(a), {{ auth()->user()->nome ?? '' }}"
+    subcabecalho="Aqui está o resumo das suas finanças"
+    nav="dashboard"
+>
+    <x-slot:acoes>
+        <x-painel.botao :href="route('transacoes.create')">+ Nova transação</x-painel.botao>
+    </x-slot:acoes>
 
-@section('titulo', 'Início')
-@section('nav_dashboard', 'ativo')
-@section('cabecalho', 'Bem-vindo(a), ' . (auth()->user()->nome ?? ''))
-@section('subcabecalho', 'Aqui está o resumo das suas finanças')
-
-@section('topo_acoes')
-    <a href="{{ route('transacoes.create') }}" class="painel-btn">+ Nova transação</a>
-@endsection
-
-@section('conteudo')
     @if (session('msg'))
         <div class="painel-alerta">{{ session('msg') }}</div>
     @endif
 
     {{-- Cards de resumo --}}
     <section class="painel-cards">
-        <div class="painel-card painel-card-destaque">
-            <span class="painel-card-rotulo">Saldo total</span>
-            <strong class="painel-card-valor {{ ($saldo ?? 0) < 0 ? 'negativo' : 'positivo' }}">
-                R$ {{ number_format($saldo ?? 0, 2, ',', '.') }}
-            </strong>
-        </div>
-        <div class="painel-card">
-            <span class="painel-card-rotulo">Receitas</span>
-            <strong class="painel-card-valor positivo">R$ {{ number_format($receitas ?? 0, 2, ',', '.') }}</strong>
-        </div>
-        <div class="painel-card">
-            <span class="painel-card-rotulo">Despesas</span>
-            <strong class="painel-card-valor negativo">R$ {{ number_format($despesas ?? 0, 2, ',', '.') }}</strong>
-        </div>
+        <x-painel.card
+            rotulo="Saldo total"
+            valor="R$ {{ number_format($saldo ?? 0, 2, ',', '.') }}"
+            :tom="($saldo ?? 0) < 0 ? 'negativo' : 'positivo'"
+            destaque
+        />
+        <x-painel.card rotulo="Receitas" valor="R$ {{ number_format($receitas ?? 0, 2, ',', '.') }}" tom="positivo" />
+        <x-painel.card rotulo="Despesas" valor="R$ {{ number_format($despesas ?? 0, 2, ',', '.') }}" tom="negativo" />
     </section>
 
     {{-- Gráfico --}}
-    <section class="painel-bloco">
-        <div class="painel-bloco-cabecalho">
-            <h2>Evolução (últimos 6 meses)</h2>
-        </div>
+    <x-painel.bloco titulo="Evolução (últimos 6 meses)">
         <div class="painel-grafico">
             <canvas id="graficoFinancas"></canvas>
         </div>
-    </section>
+    </x-painel.bloco>
 
     {{-- Filtros --}}
-    <section class="painel-bloco">
+    <x-painel.bloco>
         <form method="GET" action="{{ route('filtro') }}" class="painel-filtros">
             <div class="painel-filtro">
                 <label for="periodo">Período</label>
@@ -71,153 +60,116 @@
                 <input type="text" name="busca" id="busca" placeholder="Ex: Netflix" value="{{ request('busca') }}">
             </div>
             <div class="painel-filtro">
-                <button type="submit" class="painel-btn">Filtrar</button>
+                <x-painel.botao type="submit">Filtrar</x-painel.botao>
             </div>
         </form>
-    </section>
+    </x-painel.bloco>
 
     {{-- Tabela de transações --}}
-    <section class="painel-bloco">
-        <div class="painel-bloco-cabecalho">
-            <h2>Transações</h2>
-        </div>
-        <div class="painel-tabela-wrap">
-            <table class="painel-tabela">
-                <thead>
-                    <tr>
-                        <th>Tipo</th>
-                        <th>Valor</th>
-                        <th>Descrição</th>
-                        <th>Categoria</th>
-                        <th>Data</th>
-                        <th>Opções</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($transacoes as $t)
-                        <tr>
-                            <td>
-                                <span class="painel-tag {{ $t->tipo === 'Receitas' ? 'tag-receita' : 'tag-despesa' }}">
-                                    {{ $t->tipo }}
-                                </span>
-                            </td>
-                            <td class="{{ $t->tipo === 'Receitas' ? 'positivo' : 'negativo' }}">
-                                {{ $t->tipo === 'Receitas' ? '+' : '−' }} R$ {{ number_format($t->valor, 2, ',', '.') }}
-                            </td>
-                            <td>{{ $t->descricao }}</td>
-                            <td>{{ $t->categoria->nome }}</td>
-                            <td>{{ $t->created_at->format('d/m/Y') }}</td>
-                            <td class="painel-tabela-acoes">
-                                <a href="{{ route('transacoes.show', $t->id) }}">Exibir</a>
-                                <a href="{{ route('transacoes.edit', $t->id) }}">Editar</a>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="painel-tabela-vazia">Nenhuma transação encontrada.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+    <x-painel.bloco titulo="Transações">
+        <x-painel.tabela :colunas="['Tipo', 'Valor', 'Descrição', 'Categoria', 'Data', 'Opções']">
+            @forelse($transacoes as $t)
+                <tr>
+                    <td><x-painel.tag :tipo="$t->tipo" /></td>
+                    <td class="{{ $t->tipo === 'Receitas' ? 'positivo' : 'negativo' }}">
+                        {{ $t->tipo === 'Receitas' ? '+' : '−' }} R$ {{ number_format($t->valor, 2, ',', '.') }}
+                    </td>
+                    <td>{{ $t->descricao }}</td>
+                    <td>{{ $t->categoria->nome }}</td>
+                    <td>{{ $t->created_at->format('d/m/Y') }}</td>
+                    <td class="painel-tabela-acoes">
+                        <a href="{{ route('transacoes.show', $t->id) }}">Exibir</a>
+                        <a href="{{ route('transacoes.edit', $t->id) }}">Editar</a>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6" class="painel-tabela-vazia">Nenhuma transação encontrada.</td>
+                </tr>
+            @endforelse
+        </x-painel.tabela>
 
-        @if ($transacoes->hasPages())
-            <div class="painel-paginacao">
-                @if ($transacoes->onFirstPage())
-                    <span class="painel-pag-item desabilitado">Anterior</span>
-                @else
-                    <a class="painel-pag-item" href="{{ $transacoes->previousPageUrl() }}">Anterior</a>
-                @endif
+        <x-painel.paginacao :paginator="$transacoes" />
+    </x-painel.bloco>
 
-                <span class="painel-pag-info">Página {{ $transacoes->currentPage() }} de {{ $transacoes->lastPage() }}</span>
+    <x-slot:head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    </x-slot:head>
 
-                @if ($transacoes->hasMorePages())
-                    <a class="painel-pag-item" href="{{ $transacoes->nextPageUrl() }}">Próxima</a>
-                @else
-                    <span class="painel-pag-item desabilitado">Próxima</span>
-                @endif
-            </div>
-        @endif
-    </section>
-@endsection
+    <x-slot:scripts>
+        <script>
+            (function () {
+                const ctx = document.getElementById('graficoFinancas');
+                if (!ctx || typeof Chart === 'undefined') return;
 
-@push('head')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-@endpush
+                const dados = @json($grafico);
 
-@push('scripts')
-    <script>
-        (function () {
-            const ctx = document.getElementById('graficoFinancas');
-            if (!ctx || typeof Chart === 'undefined') return;
+                const areaReceitas = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
+                areaReceitas.addColorStop(0, 'rgba(34, 197, 94, 0.35)');
+                areaReceitas.addColorStop(1, 'rgba(34, 197, 94, 0)');
 
-            const dados = @json($grafico);
+                const areaDespesas = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
+                areaDespesas.addColorStop(0, 'rgba(239, 68, 68, 0.35)');
+                areaDespesas.addColorStop(1, 'rgba(239, 68, 68, 0)');
 
-            const areaReceitas = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
-            areaReceitas.addColorStop(0, 'rgba(34, 197, 94, 0.35)');
-            areaReceitas.addColorStop(1, 'rgba(34, 197, 94, 0)');
-
-            const areaDespesas = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
-            areaDespesas.addColorStop(0, 'rgba(239, 68, 68, 0.35)');
-            areaDespesas.addColorStop(1, 'rgba(239, 68, 68, 0)');
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dados.labels,
-                    datasets: [
-                        {
-                            label: 'Receitas',
-                            data: dados.receitas,
-                            borderColor: '#22c55e',
-                            backgroundColor: areaReceitas,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 3,
-                            pointBackgroundColor: '#22c55e',
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dados.labels,
+                        datasets: [
+                            {
+                                label: 'Receitas',
+                                data: dados.receitas,
+                                borderColor: '#22c55e',
+                                backgroundColor: areaReceitas,
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 3,
+                                pointBackgroundColor: '#22c55e',
+                            },
+                            {
+                                label: 'Despesas',
+                                data: dados.despesas,
+                                borderColor: '#ef4444',
+                                backgroundColor: areaDespesas,
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 3,
+                                pointBackgroundColor: '#ef4444',
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: {
+                                labels: { color: '#c3ccde', usePointStyle: true, boxWidth: 8 },
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: (c) => c.dataset.label + ': R$ ' +
+                                        c.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
+                                },
+                            },
                         },
-                        {
-                            label: 'Despesas',
-                            data: dados.despesas,
-                            borderColor: '#ef4444',
-                            backgroundColor: areaDespesas,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 3,
-                            pointBackgroundColor: '#ef4444',
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: {
-                        legend: {
-                            labels: { color: '#c3ccde', usePointStyle: true, boxWidth: 8 },
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: (c) => c.dataset.label + ': R$ ' +
-                                    c.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#8b97ad' },
+                            },
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: {
+                                    color: '#8b97ad',
+                                    callback: (v) => 'R$ ' + v.toLocaleString('pt-BR'),
+                                },
                             },
                         },
                     },
-                    scales: {
-                        x: {
-                            grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: { color: '#8b97ad' },
-                        },
-                        y: {
-                            grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: {
-                                color: '#8b97ad',
-                                callback: (v) => 'R$ ' + v.toLocaleString('pt-BR'),
-                            },
-                        },
-                    },
-                },
-            });
-        })();
-    </script>
-@endpush
+                });
+            })();
+        </script>
+    </x-slot:scripts>
+</x-painel.layout>

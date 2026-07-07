@@ -466,3 +466,136 @@ body.painel {
         padding: 1.25rem;
     }
 }
+
+/* ------------------------- Formulários (CRUD) --------------------- */
+.painel-form-wrap {
+    max-width: 34rem;
+}
+
+.painel-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.painel-form label {
+    color: var(--texto-mut);
+    font-size: 0.82rem;
+    margin-top: 0.75rem;
+}
+
+.painel-form input,
+.painel-form select {
+    background: var(--bg-2);
+    border: 1px solid var(--borda);
+    border-radius: 0.6rem;
+    padding: 0.65rem 0.75rem;
+    color: var(--texto);
+    font-size: 0.92rem;
+    color-scheme: dark;
+    width: 100%;
+}
+
+.painel-form input:focus,
+.painel-form select:focus {
+    outline: none;
+    border-color: var(--azul);
+}
+
+.painel-form-acoes {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.painel-btn-sec {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--borda);
+    color: var(--texto);
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.6rem 1.15rem;
+    border-radius: 0.65rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: border-color 0.15s;
+}
+
+.painel-btn-sec:hover {
+    border-color: var(--azul);
+}
+
+.painel-btn-perigo {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #f6a3a3;
+    cursor: pointer;
+    padding: 0.6rem 1.15rem;
+    border-radius: 0.65rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.15s;
+}
+
+.painel-btn-perigo:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fff;
+}
+
+.painel-erros {
+    list-style: none;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f6a3a3;
+    padding: 0.75rem 1rem;
+    border-radius: 0.65rem;
+    margin-bottom: 0.5rem;
+}
+
+.painel-erros li {
+    margin-left: 1rem;
+}
+
+.painel-voltar {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--texto-mut);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.painel-voltar:hover {
+    color: var(--texto);
+}
+
+/* Detalhe (telas "Mostrar") */
+.painel-detalhe {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 34rem;
+}
+
+.painel-detalhe-linha {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--borda);
+}
+
+.painel-detalhe-linha span {
+    color: var(--texto-mut);
+    font-size: 0.85rem;
+}
+
+.painel-detalhe-linha strong {
+    font-weight: 600;
+    text-align: right;
+}
+
+/* Toolbar de listagem (botão à direita do título) */
+.painel-bloco-cabecalho .painel-btn {
+    margin-left: auto;
+}

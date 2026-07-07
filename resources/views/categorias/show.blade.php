@@ -1,26 +1,23 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Mostrar</title>
-</head>
-<body>
-    <div class="fundo">
-        <div class="fundo-caixa">
-            <div class="fundo-caixa-exibicao">
-                @if (isset($msg))
-                    <h1>Categoria não encontrada</h1>
-                @else
-                    <h1>Categoria</h1>
-                    <p>Nome: {{ $categoria->nome }}</p>
-                    <p>Tipo: {{ $categoria->tipo }}</p>
-                    <a href="{{ route('categorias.index') }}">Voltar</a>
-                @endif
+<x-painel.layout titulo="Categoria" cabecalho="Detalhes da categoria" nav="categorias">
+    <x-painel.bloco estreito>
+        @if (isset($msg))
+            <p>Categoria não encontrada.</p>
+        @else
+            <div class="painel-detalhe">
+                <div class="painel-detalhe-linha">
+                    <span>Nome</span>
+                    <strong>{{ $categoria->nome }}</strong>
+                </div>
+                <div class="painel-detalhe-linha">
+                    <span>Tipo</span>
+                    <strong><x-painel.tag :tipo="$categoria->tipo" /></strong>
+                </div>
             </div>
-        </div>
-    </div>
-</body>
-</html>
+
+            <div class="painel-form-acoes">
+                <x-painel.botao :href="route('categorias.edit', $categoria->id)">Editar</x-painel.botao>
+                <x-painel.botao :href="route('categorias.index')" variante="sec">Voltar</x-painel.botao>
+            </div>
+        @endif
+    </x-painel.bloco>
+</x-painel.layout>
