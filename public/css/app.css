@@ -360,3 +360,31 @@
     color: #374151;
     font-size: 0.9rem;
 }
+
+/* Logout como item de menu e "lembrar de mim" */
+.form-logout {
+    margin: 0;
+    display: inline;
+}
+
+.form-logout button {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.lembrar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    margin: 0.3rem 0;
+}
+
+.lembrar input {
+    width: auto;
+    margin: 0;
+}

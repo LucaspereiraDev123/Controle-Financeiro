@@ -3,31 +3,24 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\TransacoesController;
-use App\Http\Controllers\UsuariosController;
-use App\Http\Middleware\Autenticador;
 use App\Http\Controllers\DashboardController;
+
+/*
+ * As rotas de autenticação (login, registro, logout, recuperação de senha e
+ * verificação de e-mail) são registradas automaticamente pelo Laravel Fortify.
+ */
 
 Route::get('/', function () {
     return redirect('/dashboard');
-})->middleware(Autenticador::class); 
+});
 
-Route::resource('/categorias', CategoriasController::class)
-    ->middleware(Autenticador::class); 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('/categorias', CategoriasController::class);
+    // Força o nome do parâmetro para casar com o type-hint Transacao $transacao
+    // (o Laravel singularizaria "transacoes" como "transaco", quebrando o binding).
+    Route::resource('/transacoes', TransacoesController::class)
+        ->parameters(['transacoes' => 'transacao']);
 
-Route::resource('/transacoes', TransacoesController::class)
-    ->middleware(Autenticador::class); 
-
-Route::get('/login', [UsuariosController::class, 'index'])->name('login');
-Route::post('/login', [UsuariosController::class, 'store'])->name('signin');
-Route::get('/logout', [UsuariosController::class, 'logout'])->name('logout');
-
-Route::get('/register', [UsuariosController::class, 'create'])->name('usuarios.create');
-Route::post('/register', [UsuariosController::class, 'registerStore'])
-->name('usuarios.registerStore');
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')
-    ->middleware(Autenticador::class);
-    
-Route::get('/filtro', [DashboardController::class, 'filtroDashboard'])->name('filtro')
-    ->middleware(Autenticador::class);
-
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/filtro', [DashboardController::class, 'filtroDashboard'])->name('filtro');
+});
