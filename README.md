@@ -80,6 +80,17 @@ A verificação de e-mail é obrigatória, então a aplicação precisa consegui
   MAIL_USERNAME=<username da sua Inbox no Mailtrap>
   MAIL_PASSWORD=<password da sua Inbox no Mailtrap>
   ```
+- **Produção (Brevo)**: envio real via SMTP.
+  ```env
+  MAIL_MAILER=smtp
+  MAIL_HOST=smtp-relay.brevo.com
+  MAIL_PORT=587
+  MAIL_USERNAME=<login SMTP do Brevo>
+  MAIL_PASSWORD=<SMTP key do Brevo>
+  MAIL_FROM_ADDRESS="nao-responda@economizaai.com.br"
+  ```
+  Para não cair em spam, autentique o domínio no Brevo e publique **SPF, DKIM e DMARC**
+  no DNS. Detalhes em `.env.example`.
 
 ### 7. Iniciar servidor e worker da fila
 Os e-mails são **enfileirados** (`ShouldQueue`) para não bloquear o cadastro. Com a
