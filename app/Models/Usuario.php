@@ -29,6 +29,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         'assinatura_ativa_ate',
         'mp_preapproval_id',
         'termos_aceitos_em',
+        'is_admin',
     ];
 
     /**
@@ -86,6 +87,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
             'trial_ends_at' => 'datetime',
             'assinatura_ativa_ate' => 'datetime',
             'termos_aceitos_em' => 'datetime',
+            'is_admin' => 'boolean',
         ];
     }
 

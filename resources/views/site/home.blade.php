@@ -6,7 +6,7 @@
     <section class="site-hero">
         <h1>Controle o seu dinheiro sem complicação</h1>
         <p class="site-hero-sub">
-            O <strong>Economiza Aí</strong> ajuda você a registrar receitas e despesas,
+            O <strong>Aí Economiza</strong> ajuda você a registrar receitas e despesas,
             organizar por categorias e enxergar seu saldo em tempo real — tudo num só lugar.
         </p>
         <div class="site-hero-acoes">

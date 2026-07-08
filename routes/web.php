@@ -6,7 +6,10 @@ use App\Http\Controllers\TransacoesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\AssinaturaController;
+use App\Http\Controllers\ContaController;
 use App\Http\Controllers\MercadoPagoWebhookController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminUsuarioController;
 
 /*
  * As rotas de autenticação (login, registro, logout, recuperação de senha e
@@ -25,6 +28,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/assinatura', [AssinaturaController::class, 'index'])->name('assinatura.expirada');
     Route::post('/assinatura/checkout', [AssinaturaController::class, 'checkout'])->name('assinatura.checkout');
     Route::get('/assinatura/retorno', [AssinaturaController::class, 'retorno'])->name('assinatura.retorno');
+
+    // Minha conta: dados do cliente e situação do plano. Acessível mesmo com
+    // a assinatura expirada, por isso fica fora do middleware `assinatura`.
+    Route::get('/conta', [ContaController::class, 'index'])->name('conta');
+
+    // Painel de administração (só usuários is_admin). Fora do middleware
+    // `assinatura`: gerir o sistema não depende de ter assinatura própria.
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/usuarios', [AdminUsuarioController::class, 'index'])->name('usuarios');
+        Route::post('/usuarios/{usuario}/estender', [AdminUsuarioController::class, 'estenderAcesso'])->name('usuarios.estender');
+        Route::post('/usuarios/{usuario}/bloquear', [AdminUsuarioController::class, 'bloquearAcesso'])->name('usuarios.bloquear');
+    });
 
     // Áreas do app: exigem assinatura vigente ou período de teste ativo.
     Route::middleware('assinatura')->group(function () {

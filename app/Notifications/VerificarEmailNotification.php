@@ -25,12 +25,12 @@ class VerificarEmailNotification extends VerifyEmail implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Confirme seu e-mail — Economiza Aí')
+            ->subject('Confirme seu e-mail — Aí Economiza')
             ->greeting('Olá!')
-            ->line('Falta pouco para começar a organizar suas finanças no Economiza Aí.')
+            ->line('Falta pouco para começar a organizar suas finanças no Aí Economiza.')
             ->line('Clique no botão abaixo para confirmar seu endereço de e-mail.')
             ->action('Confirmar e-mail', $this->verificationUrl($notifiable))
             ->line('Se você não criou uma conta, nenhuma ação é necessária.')
-            ->salutation('Abraços, equipe Economiza Aí');
+            ->salutation('Abraços, equipe Aí Economiza');
     }
 }
