@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $titulo }} — Economiza Aí</title>
+    <title>{{ $titulo }} — Aí Economiza</title>
     <link rel="stylesheet" href="{{ asset('css/painel.css') }}">
     <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" sizes="64x64">
     {{ $head ?? '' }}
@@ -17,8 +17,8 @@
 <body class="painel">
     <aside class="painel-sidebar">
         <a href="{{ route('dashboard') }}" class="painel-logo">
-            <span class="painel-logo-mark">E</span>
-            <span>Economiza Aí</span>
+            <span class="painel-logo-mark">A</span>
+            <span>Aí Economiza</span>
         </a>
 
         <p class="painel-menu-titulo">Menu</p>
@@ -39,20 +39,30 @@
 
         <p class="painel-menu-titulo">Suporte</p>
         <nav class="painel-nav">
+            <a href="{{ route('conta') }}" class="painel-nav-item {{ $nav === 'conta' ? 'ativo' : '' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+                <span>Minha conta</span>
+            </a>
             <a href="{{ route('planos') }}" class="painel-nav-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
                 <span>Planos</span>
             </a>
+            @if(auth()->user()?->is_admin)
+                <a href="{{ route('admin.dashboard') }}" class="painel-nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
+                    <span>Admin</span>
+                </a>
+            @endif
         </nav>
 
         <div class="painel-sidebar-rodape">
-            <div class="painel-usuario">
+            <a href="{{ route('conta') }}" class="painel-usuario">
                 <span class="painel-avatar">{{ strtoupper(substr(auth()->user()->nome ?? 'U', 0, 1)) }}</span>
                 <div class="painel-usuario-info">
                     <strong>{{ auth()->user()->nome }}</strong>
                     <small>{{ auth()->user()->email }}</small>
                 </div>
-            </div>
+            </a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="painel-sair">Sair</button>

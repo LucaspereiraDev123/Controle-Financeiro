@@ -1,5 +1,5 @@
 /* ============================================================
-   Economiza Aí — Painel (tema escuro)
+   Aí Economiza — Painel (tema escuro)
    ============================================================ */
 
 * {
@@ -121,6 +121,15 @@ body.painel {
     align-items: center;
     gap: 0.6rem;
     margin-bottom: 0.75rem;
+    padding: 0.35rem;
+    border-radius: 0.75rem;
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+a.painel-usuario:hover {
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .painel-avatar {
@@ -593,6 +602,79 @@ body.painel {
 .painel-detalhe-linha strong {
     font-weight: 600;
     text-align: right;
+}
+
+/* Badge de situação da assinatura (tela Minha conta) */
+.conta-status {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.conta-status--ativa {
+    color: var(--verde);
+    background: rgba(34, 197, 94, 0.14);
+}
+
+.conta-status--trial {
+    color: #f5b301;
+    background: rgba(245, 179, 1, 0.14);
+}
+
+.conta-status--expirada {
+    color: var(--vermelho);
+    background: rgba(239, 68, 68, 0.14);
+}
+
+/* ------------------------- Painel de admin ------------------------ */
+.painel-texto-mut {
+    color: var(--texto-mut);
+}
+
+.painel-alerta-erro {
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    color: #fca5a5;
+}
+
+.admin-busca {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.admin-busca-campo,
+.admin-dias {
+    background: var(--card-2);
+    border: 1px solid var(--borda);
+    border-radius: 0.5rem;
+    color: var(--texto);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.9rem;
+}
+
+.admin-busca-campo {
+    min-width: 16rem;
+}
+
+.admin-dias {
+    width: 4.5rem;
+    text-align: center;
+}
+
+.admin-acoes {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.admin-form-inline {
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
 }
 
 /* Toolbar de listagem (botão à direita do título) */

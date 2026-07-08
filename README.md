@@ -1,8 +1,8 @@
-# Economiza Aí — Controle Financeiro (SaaS em Laravel)
+# Aí Economiza — Controle Financeiro (SaaS em Laravel)
 
 Aplicação web em **Laravel 12** para controle financeiro pessoal, em transformação para **SaaS por assinatura**. Cada usuário tem seus próprios dados (transações e categorias) totalmente isolados, com autenticação de produção via **Laravel Fortify**.
 
-> Nome do produto: **Economiza Aí** (configurável em `APP_NAME`).
+> Nome do produto: **Aí Economiza** (configurável em `APP_NAME`).
 
 ## 🎯 Funcionalidades
 
@@ -87,7 +87,7 @@ A verificação de e-mail é obrigatória, então a aplicação precisa consegui
   MAIL_PORT=587
   MAIL_USERNAME=<login SMTP do Brevo>
   MAIL_PASSWORD=<SMTP key do Brevo>
-  MAIL_FROM_ADDRESS="nao-responda@economizaai.com.br"
+  MAIL_FROM_ADDRESS="nao-responda@aieconomiza.com.br"
   ```
   Para não cair em spam, autentique o domínio no Brevo e publique **SPF, DKIM e DMARC**
   no DNS. Detalhes em `.env.example`.

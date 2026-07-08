@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Economiza Aí</title>
+    <title>Aí Economiza</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="icon" href="{{ asset('images/Logo 2.png') }}" type="image/png" size="16x16">
 </head>
@@ -11,7 +11,7 @@
     <div class="cabecalho">
         
         <header>
-            <h1>Economiza Aí</h1>  
+            <h1>Aí Economiza</h1>  
         </header>
         <main>
             <nav>

@@ -63,4 +63,33 @@ class TelasAppTest extends TestCase
         $this->get(route('password.request'))->assertOk();
         $this->get(route('password.reset', ['token' => 'abc123']))->assertOk();
     }
+
+    public function test_tela_minha_conta_mostra_dados_e_plano(): void
+    {
+        $usuario = $this->usuarioComAcesso();
+
+        $this->actingAs($usuario)->get(route('conta'))
+            ->assertOk()
+            ->assertSee('Minha conta')
+            ->assertSee($usuario->email)
+            ->assertSee(config('services.mercadopago.plano_nome'))
+            ->assertSee('Período de teste');
+    }
+
+    public function test_minha_conta_acessivel_mesmo_com_assinatura_expirada(): void
+    {
+        $usuario = Usuario::create([
+            'nome' => 'Expirado',
+            'email' => 'expirado' . uniqid() . '@teste.com',
+            'password' => Hash::make('SenhaForte123'),
+            'trial_ends_at' => now()->subDay(),
+            'termos_aceitos_em' => now(),
+        ]);
+        $usuario->markEmailAsVerified();
+
+        $this->actingAs($usuario)->get(route('conta'))
+            ->assertOk()
+            ->assertSee('Expirada')
+            ->assertSee('Assinar agora');
+    }
 }
