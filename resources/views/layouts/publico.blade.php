@@ -28,7 +28,7 @@
             </nav>
         </header>
 
-        <main class="site-conteudo">
+        <main class="@yield('main_classe', 'site-conteudo')">
             @yield('conteudo')
         </main>
 
