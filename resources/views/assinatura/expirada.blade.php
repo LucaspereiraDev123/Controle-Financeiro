@@ -1,4 +1,4 @@
-<x-auth.layout titulo="Seu período de teste terminou" subtitulo="Para continuar usando o Aí Economiza e manter o controle das suas finanças, assine o plano e reative seu acesso.">
+<x-auth.layout titulo="Seu período de teste terminou" subtitulo="Para continuar usando o Economiza Certo e manter o controle das suas finanças, assine o plano e reative seu acesso.">
     @if (session('msg'))
         <div class="auth-status">{{ session('msg') }}</div>
     @endif

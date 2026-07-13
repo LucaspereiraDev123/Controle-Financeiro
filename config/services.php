@@ -41,7 +41,7 @@ return [
         'webhook_secret' => env('MP_WEBHOOK_SECRET'),
         // Valor mensal do plano único (em reais).
         'plano_valor' => (float) env('MP_PLANO_VALOR', 19.90),
-        'plano_nome' => env('MP_PLANO_NOME', 'Assinatura Aí Economiza'),
+        'plano_nome' => env('MP_PLANO_NOME', 'Assinatura Economiza Certo'),
     ],
 
 ];

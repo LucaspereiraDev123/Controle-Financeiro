@@ -1,5 +1,5 @@
 /* ============================================================
-   Aí Economiza — Site público (tema escuro)
+   Economiza Certo — Site público (identidade de marca · base clara)
    Mesma paleta do painel (painel.css) para manter a identidade
    coesa da landing até o app.
    ============================================================ */
@@ -8,21 +8,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, Arial, Helvetica, sans-serif;
 }
 
 :root {
-    --bg: #0b1220;
-    --bg-2: #0f1830;
-    --card: #131c31;
-    --card-2: #16203a;
-    --borda: rgba(255, 255, 255, 0.07);
-    --texto: #e6ebf5;
-    --texto-mut: #8b97ad;
-    --azul: #3b82f6;
-    --azul-2: #2f6bff;
-    --verde: #22c55e;
-    --vermelho: #ef4444;
+    --bg: #F1F5EC;
+    --bg-2: #FFFFFF;
+    --card: #FFFFFF;
+    --card-2: #EAF3DE;
+    --borda: #E2E8DA;
+    --texto: #173404;
+    --texto-mut: #5F5E5A;
+    --verde-escuro: #173404;
+    --verde: #3B6D11;
+    --verde-vivo: #639922;
+    --verde-claro: #EAF3DE;
+    --azul: #0C447C;
+    --azul-claro: #E6F1FB;
 }
 
 .site {
@@ -30,8 +32,8 @@
     flex-direction: column;
     min-height: 100vh;
     background:
-        radial-gradient(1100px 560px at 100% -10%, rgba(47, 107, 255, 0.14), transparent 60%),
-        radial-gradient(900px 500px at -10% 10%, rgba(34, 197, 94, 0.08), transparent 55%),
+        radial-gradient(1100px 560px at 100% -10%, rgba(59, 109, 17, 0.08), transparent 60%),
+        radial-gradient(900px 500px at -10% 10%, rgba(12, 68, 124, 0.06), transparent 55%),
         var(--bg);
     color: var(--texto);
 }
@@ -45,17 +47,21 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: rgba(11, 18, 32, 0.72);
+    background: rgba(241, 245, 236, 0.8);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--borda);
 }
 
 .site-logo {
-    color: var(--texto);
-    font-size: 1.3rem;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
-    letter-spacing: -0.02em;
+}
+
+.site-logo img {
+    height: 2rem;
+    width: auto;
+    display: block;
 }
 
 .site-nav {
@@ -72,23 +78,24 @@
 }
 
 .site-nav a:hover {
-    color: var(--texto);
+    color: var(--verde-escuro);
 }
 
 .site-btn {
-    background: linear-gradient(135deg, var(--azul-2), var(--azul));
+    background: var(--verde);
     color: #ffffff !important;
     padding: 0.6rem 1.2rem;
     border-radius: 0.6rem;
     text-decoration: none;
     font-weight: 600;
-    box-shadow: 0 6px 20px rgba(47, 107, 255, 0.28);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 6px 20px rgba(59, 109, 17, 0.22);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
 .site-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 26px rgba(47, 107, 255, 0.4);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 26px rgba(59, 109, 17, 0.3);
 }
 
 .site-btn-grande {
@@ -113,14 +120,17 @@
 }
 
 .site-hero h1 {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
     font-size: 2.9rem;
+    font-weight: 600;
     line-height: 1.1;
     letter-spacing: -0.03em;
     margin-bottom: 1.25rem;
-    background: linear-gradient(180deg, #ffffff, #b7c4de);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--verde-escuro);
+}
+
+.site-hero h1 .destaque {
+    color: var(--azul);
 }
 
 .site-hero-sub {
@@ -132,7 +142,7 @@
 }
 
 .site-hero-sub strong {
-    color: var(--texto);
+    color: var(--verde-escuro);
 }
 
 .site-hero-acoes {
@@ -144,7 +154,7 @@
 }
 
 .site-link {
-    color: var(--texto);
+    color: var(--azul);
     font-weight: 600;
     text-decoration: none;
     border-bottom: 1px solid transparent;
@@ -174,18 +184,21 @@
     border: 1px solid var(--borda);
     border-radius: 1rem;
     padding: 1.6rem;
+    box-shadow: 0 1px 3px rgba(23, 52, 4, 0.05), 0 8px 24px rgba(23, 52, 4, 0.05);
     transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
 .site-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: rgba(59, 109, 17, 0.4);
 }
 
 .site-card h3 {
-    color: var(--texto);
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    color: var(--verde-escuro);
     margin-bottom: 0.5rem;
     font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .site-card p {
@@ -199,9 +212,11 @@
 }
 
 .site-planos h1 {
-    color: var(--texto);
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    color: var(--verde-escuro);
     margin-bottom: 0.5rem;
     font-size: 2rem;
+    font-weight: 600;
     letter-spacing: -0.02em;
 }
 
@@ -211,18 +226,20 @@
 }
 
 .site-plano {
-    background: linear-gradient(160deg, var(--card-2), var(--card));
-    border: 1px solid rgba(59, 130, 246, 0.35);
+    background: var(--card);
+    border: 1px solid rgba(59, 109, 17, 0.3);
     border-radius: 1.25rem;
     padding: 2.5rem 2rem;
     max-width: 25rem;
     margin: 0 auto;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 20px 50px rgba(23, 52, 4, 0.1);
 }
 
 .site-plano h2 {
-    color: var(--texto);
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    color: var(--verde-escuro);
     font-size: 1.35rem;
+    font-weight: 600;
 }
 
 .site-plano-preco {
@@ -262,7 +279,7 @@
     height: 1.2rem;
     margin-right: 0.6rem;
     border-radius: 50%;
-    background: rgba(34, 197, 94, 0.16);
+    background: var(--verde-claro);
     color: var(--verde);
     font-size: 0.75rem;
     font-weight: 700;
@@ -282,18 +299,23 @@
     padding: 2.5rem;
     line-height: 1.75;
     color: var(--texto);
+    box-shadow: var(--sombra, 0 8px 24px rgba(23, 52, 4, 0.05));
 }
 
 .site-legal h1 {
-    color: var(--texto);
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    color: var(--verde-escuro);
     margin-bottom: 0.25rem;
+    font-weight: 600;
     letter-spacing: -0.02em;
 }
 
 .site-legal h2 {
-    color: var(--texto);
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    color: var(--verde-escuro);
     margin: 1.75rem 0 0.5rem;
     font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .site-legal p,
@@ -308,9 +330,9 @@
 }
 
 .site-legal-aviso {
-    background: rgba(245, 179, 1, 0.1);
-    border: 1px solid rgba(245, 179, 1, 0.4);
-    color: #f5d17a;
+    background: rgba(245, 179, 1, 0.12);
+    border: 1px solid rgba(245, 179, 1, 0.5);
+    color: #8a6d00;
     border-radius: 0.6rem;
     padding: 0.9rem 1rem;
     margin-bottom: 1.5rem;
@@ -340,6 +362,13 @@
     font-size: 0.85rem;
 }
 
+.site-rodape-slogan {
+    color: var(--verde-escuro);
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.9rem;
+}
+
 .site-rodape-links {
     display: flex;
     justify-content: center;
@@ -355,7 +384,7 @@
 }
 
 .site-rodape-links a:hover {
-    color: var(--azul);
+    color: var(--verde);
 }
 
 /* --------------------------- Responsivo ------------------------- */

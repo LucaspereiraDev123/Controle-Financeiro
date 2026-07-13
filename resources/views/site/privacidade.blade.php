@@ -8,7 +8,7 @@
         <p class="site-legal-data">Última atualização: 08/07/2026</p>
 
         <p>
-            Esta Política de Privacidade explica como o <strong>Aí Economiza</strong> (o "Serviço")
+            Esta Política de Privacidade explica como o <strong>Economiza Certo</strong> (o "Serviço")
             coleta, usa, compartilha e protege os seus dados pessoais, em conformidade com a
             Lei Geral de Proteção de Dados — LGPD (Lei nº 13.709/2018). Ao criar uma conta e
             utilizar o Serviço, você declara estar ciente das práticas descritas abaixo.
@@ -17,14 +17,14 @@
         <h2>1. Quem é o controlador</h2>
         <p>
             Para os fins da LGPD, o controlador dos dados pessoais tratados na plataforma é o
-            responsável pelo Aí Economiza, identificado a seguir:
+            responsável pelo Economiza Certo, identificado a seguir:
         </p>
         <ul>
-            <li><strong>Serviço:</strong> Aí Economiza (aieconomiza.com.br)</li>
+            <li><strong>Serviço:</strong> Economiza Certo (economizacerto.com.br)</li>
             <li><strong>Responsável / Razão social:</strong> [preencher: nome ou razão social]</li>
             <li><strong>CNPJ / CPF:</strong> [preencher]</li>
             <li><strong>Contato de privacidade:</strong>
-                <a href="mailto:privacidade@aieconomiza.com.br">privacidade@aieconomiza.com.br</a></li>
+                <a href="mailto:privacidade@economizacerto.com.br">privacidade@economizacerto.com.br</a></li>
         </ul>
 
         <h2>2. Dados que coletamos</h2>
@@ -39,7 +39,7 @@
             <li><strong>Dados de assinatura e pagamento:</strong> a situação da sua assinatura, as datas
                 de início e término do período de teste e um identificador da assinatura no processador
                 de pagamento. <strong>Os dados do cartão são digitados e processados diretamente pelo
-                Mercado Pago</strong> — o Aí Economiza não recebe, vê nem armazena o número do seu cartão.</li>
+                Mercado Pago</strong> — o Economiza Certo não recebe, vê nem armazena o número do seu cartão.</li>
             <li><strong>Dados técnicos e de acesso:</strong> registros (logs) que podem incluir endereço IP,
                 data e hora de acesso e informações do navegador, gerados automaticamente para segurança e
                 funcionamento do Serviço.</li>
@@ -122,14 +122,14 @@
         </ul>
         <p>
             Para exercer esses direitos, escreva para
-            <a href="mailto:privacidade@aieconomiza.com.br">privacidade@aieconomiza.com.br</a>.
+            <a href="mailto:privacidade@economizacerto.com.br">privacidade@economizacerto.com.br</a>.
             Você também tem o direito de peticionar perante a Autoridade Nacional de Proteção de
             Dados (ANPD).
         </p>
 
         <h2>10. Crianças e adolescentes</h2>
         <p>
-            O Aí Economiza não é destinado a menores de 18 anos e não coletamos intencionalmente dados
+            O Economiza Certo não é destinado a menores de 18 anos e não coletamos intencionalmente dados
             de crianças e adolescentes. Caso identifiquemos esse tratamento sem a devida autorização,
             os dados serão eliminados.
         </p>
@@ -138,7 +138,7 @@
         <p>
             Dúvidas sobre esta Política ou sobre o tratamento dos seus dados podem ser encaminhadas ao
             nosso canal de privacidade:
-            <a href="mailto:privacidade@aieconomiza.com.br">privacidade@aieconomiza.com.br</a>.
+            <a href="mailto:privacidade@economizacerto.com.br">privacidade@economizacerto.com.br</a>.
         </p>
 
         <h2>12. Alterações desta Política</h2>

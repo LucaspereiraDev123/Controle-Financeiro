@@ -1,4 +1,4 @@
-<x-admin.layout titulo="Visão geral" cabecalho="Visão geral" subcabecalho="Métricas do Aí Economiza" nav="dashboard">
+<x-admin.layout titulo="Visão geral" cabecalho="Visão geral" subcabecalho="Métricas do Economiza Certo" nav="dashboard">
     <div class="painel-cards">
         <x-painel.card rotulo="Receita mensal estimada (MRR)"
             :valor="'R$ ' . number_format($mrr, 2, ',', '.')" tom="positivo" destaque />
