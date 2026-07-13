@@ -8,7 +8,7 @@
         <p class="site-legal-data">Última atualização: 08/07/2026</p>
 
         <p>
-            Estes Termos de Uso ("Termos") regem o acesso e a utilização do <strong>Aí Economiza</strong>
+            Estes Termos de Uso ("Termos") regem o acesso e a utilização do <strong>Economiza Certo</strong>
             (o "Serviço"). Ao criar uma conta ou utilizar o Serviço, você concorda integralmente com estes
             Termos e com a <a href="{{ route('privacidade') }}">Política de Privacidade</a>. Se você não
             concordar, não utilize a plataforma.
@@ -16,14 +16,14 @@
 
         <h2>1. Identificação</h2>
         <p>
-            O Serviço é operado pelo responsável pelo Aí Economiza — <strong>[preencher: nome ou razão
+            O Serviço é operado pelo responsável pelo Economiza Certo — <strong>[preencher: nome ou razão
             social e CNPJ/CPF]</strong>, doravante denominado "nós". Contato:
-            <a href="mailto:contato@aieconomiza.com.br">contato@aieconomiza.com.br</a>.
+            <a href="mailto:contato@economizacerto.com.br">contato@economizacerto.com.br</a>.
         </p>
 
         <h2>2. O serviço</h2>
         <p>
-            O Aí Economiza é uma ferramenta de controle financeiro pessoal que permite registrar receitas,
+            O Economiza Certo é uma ferramenta de controle financeiro pessoal que permite registrar receitas,
             despesas e categorias e visualizar saldos e relatórios. O Serviço é uma ferramenta de apoio à
             organização financeira e <strong>não constitui aconselhamento financeiro, contábil ou de
             investimentos</strong>.
@@ -48,7 +48,7 @@
 
         <h2>5. Planos, pagamento e renovação</h2>
         <ul>
-            <li>O plano do Aí Economiza custa <strong>R$ 19,90 por mês</strong>, conforme divulgado na
+            <li>O plano do Economiza Certo custa <strong>R$ 19,90 por mês</strong>, conforme divulgado na
                 página de <a href="{{ route('planos') }}">Planos</a>;</li>
             <li>Os pagamentos são processados por meio do <strong>Mercado Pago</strong>. Os dados do cartão
                 são fornecidos e tratados diretamente no ambiente do Mercado Pago; não temos acesso ao
@@ -66,7 +66,7 @@
             Código de Defesa do Consumidor, você pode <strong>desistir da contratação em até 7 (sete) dias</strong>
             a contar da assinatura paga, com devolução dos valores eventualmente cobrados nesse prazo.
             Solicitações devem ser enviadas para
-            <a href="mailto:contato@aieconomiza.com.br">contato@aieconomiza.com.br</a>.
+            <a href="mailto:contato@economizacerto.com.br">contato@economizacerto.com.br</a>.
         </p>
 
         <h2>7. Uso aceitável</h2>
@@ -87,14 +87,14 @@
 
         <h2>9. Propriedade intelectual</h2>
         <p>
-            A marca, o layout, o código e os demais elementos da plataforma pertencem ao Aí Economiza.
+            A marca, o layout, o código e os demais elementos da plataforma pertencem ao Economiza Certo.
             <strong>Os dados financeiros que você cadastra são seus</strong> — apenas os tratamos para
             prestar o Serviço, conforme a Política de Privacidade.
         </p>
 
         <h2>10. Limitação de responsabilidade</h2>
         <p>
-            O Aí Economiza é uma ferramenta de apoio e não se responsabiliza por decisões financeiras
+            O Economiza Certo é uma ferramenta de apoio e não se responsabiliza por decisões financeiras
             tomadas com base nas informações registradas por você, nem por perdas decorrentes de uso
             indevido, indisponibilidade temporária ou de fatores fora do nosso controle razoável.
         </p>
@@ -123,7 +123,7 @@
         <h2>14. Contato</h2>
         <p>
             Dúvidas sobre estes Termos? Escreva para
-            <a href="mailto:contato@aieconomiza.com.br">contato@aieconomiza.com.br</a>.
+            <a href="mailto:contato@economizacerto.com.br">contato@economizacerto.com.br</a>.
         </p>
     </article>
 @endsection

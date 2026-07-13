@@ -1,33 +1,38 @@
 /* ============================================================
-   Aí Economiza — Painel (tema escuro)
+   Economiza Certo — Painel (identidade de marca · base clara)
+   Verde conduz ações/positivo; azul-marinho ancora links/neutro/saída.
    ============================================================ */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, Arial, Helvetica, sans-serif;
 }
 
 :root {
-    --bg: #0b1220;
-    --bg-2: #0f1830;
-    --card: #131c31;
-    --card-2: #16203a;
-    --borda: rgba(255, 255, 255, 0.07);
-    --texto: #e6ebf5;
-    --texto-mut: #8b97ad;
-    --azul: #3b82f6;
-    --azul-2: #2f6bff;
-    --verde: #22c55e;
-    --vermelho: #ef4444;
+    --bg: #F1F5EC;
+    --bg-2: #FFFFFF;
+    --card: #FFFFFF;
+    --card-2: #EAF3DE;
+    --borda: #E2E8DA;
+    --texto: #173404;
+    --texto-mut: #5F5E5A;
+    --verde-escuro: #173404;
+    --verde: #3B6D11;
+    --verde-vivo: #639922;
+    --verde-claro: #EAF3DE;
+    --azul: #0C447C;
+    --azul-claro: #E6F1FB;
+    --vermelho: #B91C1C;
+    --sombra: 0 1px 3px rgba(23, 52, 4, 0.06), 0 6px 20px rgba(23, 52, 4, 0.05);
 }
 
 body.painel {
     display: flex;
     min-height: 100vh;
     background:
-        radial-gradient(1200px 600px at 100% -10%, rgba(47, 107, 255, 0.12), transparent 60%),
+        radial-gradient(1200px 600px at 100% -10%, rgba(59, 109, 17, 0.07), transparent 60%),
         var(--bg);
     color: var(--texto);
 }
@@ -50,22 +55,21 @@ body.painel {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--texto);
+    color: var(--verde-escuro);
     text-decoration: none;
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
     font-size: 1.15rem;
-    font-weight: 700;
+    font-weight: 600;
     padding: 0 0.5rem 1.5rem;
 }
 
 .painel-logo-mark {
-    display: grid;
-    place-items: center;
+    display: block;
     width: 2rem;
     height: 2rem;
-    border-radius: 0.6rem;
-    background: linear-gradient(135deg, var(--azul-2), #7aa2ff);
-    color: #fff;
-    font-weight: 800;
+    border-radius: 0.55rem;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .painel-menu-titulo {
@@ -100,14 +104,14 @@ body.painel {
 }
 
 .painel-nav-item:hover {
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--texto);
+    background: var(--verde-claro);
+    color: var(--verde-escuro);
 }
 
 .painel-nav-item.ativo {
-    background: linear-gradient(135deg, var(--azul-2), var(--azul));
+    background: var(--verde);
     color: #fff;
-    box-shadow: 0 6px 16px rgba(47, 107, 255, 0.35);
+    box-shadow: 0 6px 16px rgba(59, 109, 17, 0.25);
 }
 
 .painel-sidebar-rodape {
@@ -129,7 +133,7 @@ body.painel {
 }
 
 a.painel-usuario:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--verde-claro);
 }
 
 .painel-avatar {
@@ -138,7 +142,7 @@ a.painel-usuario:hover {
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--azul-2), #7aa2ff);
+    background: linear-gradient(135deg, var(--verde), var(--verde-vivo));
     color: #fff;
     font-weight: 700;
     flex-shrink: 0;
@@ -178,9 +182,9 @@ a.painel-usuario:hover {
 }
 
 .painel-sair:hover {
-    color: #fff;
-    border-color: var(--vermelho);
-    background: rgba(239, 68, 68, 0.12);
+    color: var(--vermelho);
+    border-color: rgba(185, 28, 28, 0.5);
+    background: rgba(185, 28, 28, 0.06);
 }
 
 /* ------------------------------ Main ------------------------------ */
@@ -200,8 +204,10 @@ a.painel-usuario:hover {
 }
 
 .painel-topo h1 {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
+    color: var(--verde-escuro);
 }
 
 .painel-topo-sub {
@@ -212,7 +218,7 @@ a.painel-usuario:hover {
 
 .painel-btn {
     display: inline-block;
-    background: linear-gradient(135deg, var(--azul-2), var(--azul));
+    background: var(--verde);
     color: #fff;
     text-decoration: none;
     border: none;
@@ -221,18 +227,18 @@ a.painel-usuario:hover {
     border-radius: 0.65rem;
     font-size: 0.9rem;
     font-weight: 600;
-    box-shadow: 0 6px 16px rgba(47, 107, 255, 0.3);
+    box-shadow: 0 6px 16px rgba(59, 109, 17, 0.22);
     transition: filter 0.15s;
 }
 
 .painel-btn:hover {
-    filter: brightness(1.1);
+    filter: brightness(1.08);
 }
 
 .painel-alerta {
-    background: rgba(34, 197, 94, 0.12);
-    border: 1px solid rgba(34, 197, 94, 0.4);
-    color: #bff0cf;
+    background: var(--verde-claro);
+    border: 1px solid rgba(59, 109, 17, 0.3);
+    color: var(--verde-escuro);
     padding: 0.75rem 1rem;
     border-radius: 0.65rem;
     margin-bottom: 1.25rem;
@@ -251,10 +257,12 @@ a.painel-usuario:hover {
     border: 1px solid var(--borda);
     border-radius: 1rem;
     padding: 1.4rem 1.5rem;
+    box-shadow: var(--sombra);
 }
 
 .painel-card-destaque {
-    background: linear-gradient(135deg, #16223f, #101a30);
+    background: var(--verde-claro);
+    border-color: rgba(59, 109, 17, 0.2);
 }
 
 .painel-card-rotulo {
@@ -267,10 +275,11 @@ a.painel-usuario:hover {
     margin-top: 0.5rem;
     font-size: 1.7rem;
     font-weight: 700;
+    color: var(--verde-escuro);
 }
 
 .positivo { color: var(--verde); }
-.negativo { color: var(--vermelho); }
+.negativo { color: var(--azul); }
 
 /* ------------------------------ Blocos ---------------------------- */
 .painel-bloco {
@@ -279,6 +288,7 @@ a.painel-usuario:hover {
     border-radius: 1rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
+    box-shadow: var(--sombra);
 }
 
 .painel-bloco-cabecalho {
@@ -289,8 +299,10 @@ a.painel-usuario:hover {
 }
 
 .painel-bloco-cabecalho h2 {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
+    color: var(--verde-escuro);
 }
 
 .painel-grafico {
@@ -327,13 +339,14 @@ a.painel-usuario:hover {
     padding: 0.55rem 0.7rem;
     color: var(--texto);
     font-size: 0.9rem;
-    color-scheme: dark;
+    color-scheme: light;
 }
 
 .painel-filtro input:focus,
 .painel-filtro select:focus {
     outline: none;
-    border-color: var(--azul);
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(59, 109, 17, 0.12);
 }
 
 /* ------------------------------ Tabela ---------------------------- */
@@ -350,7 +363,7 @@ a.painel-usuario:hover {
 .painel-tabela thead th {
     text-align: left;
     color: var(--texto-mut);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -364,7 +377,7 @@ a.painel-usuario:hover {
 }
 
 .painel-tabela tbody tr:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(59, 109, 17, 0.04);
 }
 
 .painel-tag {
@@ -376,13 +389,13 @@ a.painel-usuario:hover {
 }
 
 .tag-receita {
-    background: rgba(34, 197, 94, 0.15);
-    color: #7ee2a3;
+    background: var(--verde-claro);
+    color: var(--verde-escuro);
 }
 
 .tag-despesa {
-    background: rgba(239, 68, 68, 0.15);
-    color: #f6a3a3;
+    background: var(--azul-claro);
+    color: var(--azul);
 }
 
 .painel-tabela-acoes a {
@@ -420,7 +433,8 @@ a.painel-usuario:hover {
 }
 
 .painel-pag-item:hover {
-    border-color: var(--azul);
+    border-color: var(--verde);
+    color: var(--verde);
 }
 
 .painel-pag-item.desabilitado {
@@ -501,14 +515,15 @@ a.painel-usuario:hover {
     padding: 0.65rem 0.75rem;
     color: var(--texto);
     font-size: 0.92rem;
-    color-scheme: dark;
+    color-scheme: light;
     width: 100%;
 }
 
 .painel-form input:focus,
 .painel-form select:focus {
     outline: none;
-    border-color: var(--azul);
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(59, 109, 17, 0.12);
 }
 
 .painel-form-acoes {
@@ -533,13 +548,14 @@ a.painel-usuario:hover {
 }
 
 .painel-btn-sec:hover {
-    border-color: var(--azul);
+    border-color: var(--verde);
+    color: var(--verde);
 }
 
 .painel-btn-perigo {
     background: transparent;
-    border: 1px solid rgba(239, 68, 68, 0.5);
-    color: #f6a3a3;
+    border: 1px solid rgba(185, 28, 28, 0.5);
+    color: var(--vermelho);
     cursor: pointer;
     padding: 0.6rem 1.15rem;
     border-radius: 0.65rem;
@@ -549,15 +565,14 @@ a.painel-usuario:hover {
 }
 
 .painel-btn-perigo:hover {
-    background: rgba(239, 68, 68, 0.15);
-    color: #fff;
+    background: rgba(185, 28, 28, 0.08);
 }
 
 .painel-erros {
     list-style: none;
-    background: rgba(239, 68, 68, 0.12);
-    border: 1px solid rgba(239, 68, 68, 0.4);
-    color: #f6a3a3;
+    background: rgba(185, 28, 28, 0.07);
+    border: 1px solid rgba(185, 28, 28, 0.35);
+    color: var(--vermelho);
     padding: 0.75rem 1rem;
     border-radius: 0.65rem;
     margin-bottom: 0.5rem;
@@ -576,7 +591,7 @@ a.painel-usuario:hover {
 }
 
 .painel-voltar:hover {
-    color: var(--texto);
+    color: var(--verde);
 }
 
 /* Detalhe (telas "Mostrar") */
@@ -616,17 +631,17 @@ a.painel-usuario:hover {
 
 .conta-status--ativa {
     color: var(--verde);
-    background: rgba(34, 197, 94, 0.14);
+    background: var(--verde-claro);
 }
 
 .conta-status--trial {
-    color: #f5b301;
-    background: rgba(245, 179, 1, 0.14);
+    color: #8a6d00;
+    background: rgba(245, 179, 1, 0.16);
 }
 
 .conta-status--expirada {
     color: var(--vermelho);
-    background: rgba(239, 68, 68, 0.14);
+    background: rgba(185, 28, 28, 0.1);
 }
 
 /* ------------------------- Painel de admin ------------------------ */
@@ -635,8 +650,9 @@ a.painel-usuario:hover {
 }
 
 .painel-alerta-erro {
-    border-color: rgba(239, 68, 68, 0.5) !important;
-    color: #fca5a5;
+    background: rgba(185, 28, 28, 0.07) !important;
+    border-color: rgba(185, 28, 28, 0.35) !important;
+    color: var(--vermelho);
 }
 
 .admin-busca {
@@ -647,12 +663,13 @@ a.painel-usuario:hover {
 
 .admin-busca-campo,
 .admin-dias {
-    background: var(--card-2);
+    background: var(--bg-2);
     border: 1px solid var(--borda);
     border-radius: 0.5rem;
     color: var(--texto);
     padding: 0.5rem 0.7rem;
     font-size: 0.9rem;
+    color-scheme: light;
 }
 
 .admin-busca-campo {
@@ -689,7 +706,8 @@ body.auth {
     min-height: 100vh;
     padding: 1.5rem;
     background:
-        radial-gradient(1200px 600px at 100% -10%, rgba(47, 107, 255, 0.12), transparent 60%),
+        radial-gradient(1200px 600px at 100% -10%, rgba(59, 109, 17, 0.08), transparent 60%),
+        radial-gradient(900px 500px at -10% 10%, rgba(12, 68, 124, 0.06), transparent 55%),
         var(--bg);
     color: var(--texto);
 }
@@ -697,11 +715,11 @@ body.auth {
 .auth-caixa {
     width: 100%;
     max-width: 26rem;
-    background: linear-gradient(135deg, #16223f, #101a30);
+    background: var(--card);
     border: 1px solid var(--borda);
     border-radius: 1.1rem;
     padding: 2.25rem 2rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 20px 50px rgba(23, 52, 4, 0.1);
 }
 
 .auth-logo {
@@ -709,16 +727,20 @@ body.auth {
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
-    color: var(--texto);
+    color: var(--verde-escuro);
     text-decoration: none;
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
     font-size: 1.15rem;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 1.25rem;
 }
 
 .auth-titulo {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
     text-align: center;
     font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--verde-escuro);
     margin-bottom: 0.35rem;
 }
 
@@ -770,7 +792,7 @@ body.auth {
 
 .auth-aceite a,
 .auth-links a {
-    color: #7ec8a0;
+    color: var(--azul);
     text-decoration: none;
 }
 
@@ -789,9 +811,9 @@ body.auth {
 }
 
 .auth-status {
-    background: rgba(34, 197, 94, 0.12);
-    border: 1px solid rgba(34, 197, 94, 0.4);
-    color: #bff0cf;
+    background: var(--verde-claro);
+    border: 1px solid rgba(59, 109, 17, 0.3);
+    color: var(--verde-escuro);
     padding: 0.7rem 0.9rem;
     border-radius: 0.6rem;
     font-size: 0.88rem;

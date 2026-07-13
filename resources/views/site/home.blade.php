@@ -4,10 +4,10 @@
 
 @section('conteudo')
     <section class="site-hero">
-        <h1>Controle o seu dinheiro sem complicação</h1>
+        <h1>Seu dinheiro, na <span class="destaque">conta certa</span>.</h1>
         <p class="site-hero-sub">
-            O <strong>Aí Economiza</strong> ajuda você a registrar receitas e despesas,
-            organizar por categorias e enxergar seu saldo em tempo real — tudo num só lugar.
+            O <strong>Economiza Certo</strong> ajuda você a registrar receitas e despesas,
+            organizar por categorias e enxergar seu saldo em tempo real — sem planilha, sem complicação.
         </p>
         <div class="site-hero-acoes">
             <a href="{{ route('register') }}" class="site-btn site-btn-grande">Começar grátis</a>

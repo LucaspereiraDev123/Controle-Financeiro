@@ -105,12 +105,12 @@
                 const dados = @json($grafico);
 
                 const areaReceitas = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
-                areaReceitas.addColorStop(0, 'rgba(34, 197, 94, 0.35)');
-                areaReceitas.addColorStop(1, 'rgba(34, 197, 94, 0)');
+                areaReceitas.addColorStop(0, 'rgba(59, 109, 17, 0.28)');
+                areaReceitas.addColorStop(1, 'rgba(59, 109, 17, 0)');
 
                 const areaDespesas = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
-                areaDespesas.addColorStop(0, 'rgba(239, 68, 68, 0.35)');
-                areaDespesas.addColorStop(1, 'rgba(239, 68, 68, 0)');
+                areaDespesas.addColorStop(0, 'rgba(12, 68, 124, 0.28)');
+                areaDespesas.addColorStop(1, 'rgba(12, 68, 124, 0)');
 
                 new Chart(ctx, {
                     type: 'line',
@@ -120,22 +120,22 @@
                             {
                                 label: 'Receitas',
                                 data: dados.receitas,
-                                borderColor: '#22c55e',
+                                borderColor: '#3B6D11',
                                 backgroundColor: areaReceitas,
                                 fill: true,
                                 tension: 0.4,
                                 pointRadius: 3,
-                                pointBackgroundColor: '#22c55e',
+                                pointBackgroundColor: '#3B6D11',
                             },
                             {
                                 label: 'Despesas',
                                 data: dados.despesas,
-                                borderColor: '#ef4444',
+                                borderColor: '#0C447C',
                                 backgroundColor: areaDespesas,
                                 fill: true,
                                 tension: 0.4,
                                 pointRadius: 3,
-                                pointBackgroundColor: '#ef4444',
+                                pointBackgroundColor: '#0C447C',
                             },
                         ],
                     },
@@ -145,7 +145,7 @@
                         interaction: { mode: 'index', intersect: false },
                         plugins: {
                             legend: {
-                                labels: { color: '#c3ccde', usePointStyle: true, boxWidth: 8 },
+                                labels: { color: '#5F5E5A', usePointStyle: true, boxWidth: 8 },
                             },
                             tooltip: {
                                 callbacks: {
@@ -156,13 +156,13 @@
                         },
                         scales: {
                             x: {
-                                grid: { color: 'rgba(255,255,255,0.05)' },
-                                ticks: { color: '#8b97ad' },
+                                grid: { color: 'rgba(23,52,4,0.06)' },
+                                ticks: { color: '#5F5E5A' },
                             },
                             y: {
-                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                grid: { color: 'rgba(23,52,4,0.06)' },
                                 ticks: {
-                                    color: '#8b97ad',
+                                    color: '#5F5E5A',
                                     callback: (v) => 'R$ ' + v.toLocaleString('pt-BR'),
                                 },
                             },
