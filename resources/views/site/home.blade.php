@@ -223,7 +223,7 @@
         </div>
     </section>
 
-    {{-- 11. Depoimentos (modelo) --}}
+    <!-- {{-- 11. Depoimentos (modelo) --}}
     <section class="lp-secao lp-secao--alt">
         <div class="lp-inner lp-centro">
             <span class="lp-secao-rotulo">Depoimentos</span>
@@ -260,7 +260,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     {{-- 12. Plano (único) --}}
     <section class="lp-secao">

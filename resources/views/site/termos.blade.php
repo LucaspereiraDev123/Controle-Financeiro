@@ -16,8 +16,7 @@
 
         <h2>1. Identificação</h2>
         <p>
-            O Serviço é operado pelo responsável pelo Economiza Certo — <strong>[preencher: nome ou razão
-            social e CNPJ/CPF]</strong>, doravante denominado "nós". Contato:
+            O Serviço é operado pelo responsável pelo Economiza Certo — <strong>56.048.183 LUCAS PEREIRA ROCHA 56.048.183/0001-70</strong>, doravante denominado "nós". Contato:
             <a href="mailto:contato@economizacerto.com.br">contato@economizacerto.com.br</a>.
         </p>
 
@@ -116,7 +115,7 @@
         <h2>13. Lei aplicável e foro</h2>
         <p>
             Estes Termos são regidos pelas leis da República Federativa do Brasil. Fica eleito o foro da
-            comarca de <strong>[preencher: Cidade/UF]</strong> para dirimir eventuais controvérsias, sem
+            comarca de <strong>Aracruz - ES</strong> para dirimir eventuais controvérsias, sem
             prejuízo do foro de domicílio do consumidor, quando aplicável.
         </p>
 
