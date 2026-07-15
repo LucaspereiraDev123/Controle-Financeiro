@@ -21,8 +21,8 @@
         </p>
         <ul>
             <li><strong>Serviço:</strong> Economiza Certo (economizacerto.com.br)</li>
-            <li><strong>Responsável / Razão social:</strong> [preencher: nome ou razão social]</li>
-            <li><strong>CNPJ / CPF:</strong> [preencher]</li>
+            <li><strong>Responsável / Razão social:</strong> 56.048.183 LUCAS PEREIRA ROCHA</li>
+            <li><strong>CNPJ / CPF:</strong> 56.048.183/0001-70</li>
             <li><strong>Contato de privacidade:</strong>
                 <a href="mailto:privacidade@economizacerto.com.br">privacidade@economizacerto.com.br</a></li>
         </ul>
