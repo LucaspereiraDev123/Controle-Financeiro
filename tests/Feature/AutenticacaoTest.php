@@ -7,6 +7,7 @@ use App\Notifications\RedefinirSenhaNotification;
 use App\Notifications\VerificarEmailNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Notifications\SendQueuedNotifications;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -144,6 +145,23 @@ class AutenticacaoTest extends TestCase
         foreach ([$verificacao, $reset] as $mail) {
             $this->assertStringContainsString('Marca De Teste', $mail->subject);
             $this->assertStringContainsString('Marca De Teste', $mail->salutation);
+        }
+    }
+
+    public function test_emails_tentam_de_novo_apos_falha_de_envio(): void
+    {
+        $usuario = $this->novoUsuario();
+
+        $notificacoes = [
+            new VerificarEmailNotification(),
+            new RedefinirSenhaNotification('token-de-teste'),
+        ];
+
+        foreach ($notificacoes as $notificacao) {
+            $job = new SendQueuedNotifications($usuario, $notificacao, ['mail']);
+
+            $this->assertSame(3, $job->tries);
+            $this->assertSame([60, 300], $job->backoff());
         }
     }
 

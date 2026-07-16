@@ -19,6 +19,16 @@ class RedefinirSenhaNotification extends ResetPassword implements ShouldQueue
     use Queueable;
 
     /**
+     * Mesma retentativa da verificação de e-mail: falha de SMTP passageira não
+     * deve custar o e-mail. O link de reset expira em 60 minutos, então as
+     * tentativas cabem com folga dentro da validade.
+     */
+    public int $tries = 3;
+
+    /** Espera em segundos antes da 2ª e da 3ª tentativa. */
+    public array $backoff = [60, 300];
+
+    /**
      * @param  \App\Models\Usuario  $notifiable
      */
     public function toMail($notifiable): MailMessage
