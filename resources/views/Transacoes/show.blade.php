@@ -31,7 +31,9 @@
             </div>
 
             <div class="painel-form-acoes">
-                <x-painel.botao :href="route('transacoes.edit', $transacao->id)">Editar</x-painel.botao>
+                @podeEditar
+                    <x-painel.botao :href="route('transacoes.edit', $transacao->id)">Editar</x-painel.botao>
+                @endpodeEditar
                 <x-painel.botao :href="route('dashboard')" variante="sec">Voltar</x-painel.botao>
             </div>
         @endif

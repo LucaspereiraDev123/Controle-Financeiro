@@ -244,6 +244,29 @@ a.painel-usuario:hover {
     margin-bottom: 1.25rem;
 }
 
+/* Faixa de aviso do topo do painel (ex.: conta em modo leitura). As cores
+   acompanham os selos de situação de Minha conta (.conta-status--*). */
+.painel-aviso {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: rgba(245, 179, 1, 0.14);
+    border: 1px solid rgba(245, 179, 1, 0.45);
+    color: #8a6d00;
+    padding: 0.75rem 1.1rem;
+    border-radius: 0.65rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+}
+
+.painel-aviso--expirado {
+    background: rgba(185, 28, 28, 0.07);
+    border-color: rgba(185, 28, 28, 0.3);
+    color: var(--vermelho);
+}
+
 /* ------------------------------ Cards ----------------------------- */
 .painel-cards {
     display: grid;
@@ -599,6 +622,19 @@ a.painel-usuario:hover {
     display: grid;
     gap: 0.75rem;
     max-width: 34rem;
+}
+
+/* Tela de planos dentro do painel */
+.painel-planos-nota {
+    max-width: 34rem;
+    margin: 1rem 0 0;
+    color: var(--texto-mut);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.painel-planos-acao {
+    margin-top: 1.25rem;
 }
 
 .painel-detalhe-linha {

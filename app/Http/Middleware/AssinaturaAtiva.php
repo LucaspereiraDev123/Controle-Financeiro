@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Bloqueia o acesso às áreas do app quando o usuário não tem assinatura
- * vigente nem período de teste ativo, direcionando-o para a tela de
- * "assine para continuar". Deve rodar depois de 'auth' e 'verified'.
+ * Guarda as rotas que ALTERAM dados (criar, editar, excluir) quando o usuário
+ * não tem assinatura vigente nem período de teste ativo. As rotas de leitura
+ * ficam livres: sem assinatura o app entra em modo leitura, e não em bloqueio.
+ *
+ * Deve rodar depois de 'auth' e 'verified'. A rota `planos` fica fora deste
+ * middleware, senão o redirecionamento entraria em loop.
  */
 class AssinaturaAtiva
 {
@@ -17,8 +20,9 @@ class AssinaturaAtiva
     {
         $usuario = $request->user();
 
-        if ($usuario && ! $usuario->assinaturaAtiva()) {
-            return redirect()->route('assinatura.expirada');
+        if ($usuario && ! $usuario->podeEditar()) {
+            return redirect()->route('planos')
+                ->with('msg', 'Seu período de teste terminou. Assine o plano para voltar a lançar transações.');
         }
 
         return $next($request);

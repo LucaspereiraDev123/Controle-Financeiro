@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MercadoPago;
 use Illuminate\Support\Facades\Auth;
 
 /**
  * Páginas públicas (site institucional): landing, planos e documentos legais.
- * Não exigem autenticação.
+ * Nenhuma exige autenticação, mas `planos` se adapta a quem já é cliente.
  */
 class SiteController extends Controller
 {
@@ -22,9 +23,24 @@ class SiteController extends Controller
         return view('site.home');
     }
 
-    public function planos()
+    /**
+     * Visitante vê a página de preços do site; cliente logado vê o plano dentro
+     * do painel, com o botão de assinar. É a mesma rota porque a sidebar e o
+     * rodapé já apontam para cá.
+     */
+    public function planos(MercadoPago $mp)
     {
-        return view('site.planos');
+        $usuario = Auth::user();
+
+        if (! $usuario) {
+            return view('site.planos');
+        }
+
+        return view('planos.painel', [
+            'usuario' => $usuario,
+            'status' => $usuario->statusAssinatura(),
+            'mpConfigurado' => $mp->configurado(),
+        ]);
     }
 
     public function privacidade()

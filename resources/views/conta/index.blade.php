@@ -25,7 +25,7 @@
     <x-painel.bloco titulo="Assinatura">
         @if ($status !== 'ativa')
             <x-slot:acoes>
-                <x-painel.botao :href="route('assinatura.expirada')">Assinar agora</x-painel.botao>
+                <x-painel.botao :href="route('planos')">Assinar agora</x-painel.botao>
             </x-slot:acoes>
         @endif
 
@@ -51,7 +51,7 @@
             @else
                 <div class="painel-detalhe-linha">
                     <span>Acesso</span>
-                    <strong>Bloqueado — assine para continuar usando</strong>
+                    <strong>Modo leitura — assine para voltar a lançar</strong>
                 </div>
             @endif
         </div>

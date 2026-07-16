@@ -54,8 +54,47 @@ class AssinaturaPagamentoTest extends TestCase
 
         $this->actingAs($usuario)
             ->post(route('assinatura.checkout'))
-            ->assertRedirect(route('assinatura.expirada'))
+            ->assertRedirect(route('planos'))
             ->assertSessionHas('msg');
+    }
+
+    /**
+     * Quem está no trial pode converter antes do prazo acabar — é o caminho da
+     * sidebar, e a guarda antiga o mandava de volta ao dashboard.
+     */
+    public function test_checkout_permitido_para_usuario_em_trial(): void
+    {
+        config(['services.mercadopago.access_token' => 'TEST-token']);
+
+        Http::fake([
+            'https://api.mercadopago.com/preapproval' => Http::response([
+                'id' => 'PRE456',
+                'init_point' => 'https://www.mercadopago.com.br/checkout/PRE456',
+            ], 201),
+        ]);
+
+        $usuario = $this->usuarioExpirado();
+        $usuario->update(['trial_ends_at' => now()->addDays(5)]);
+
+        $this->actingAs($usuario)
+            ->post(route('assinatura.checkout'))
+            ->assertRedirect('https://www.mercadopago.com.br/checkout/PRE456');
+    }
+
+    public function test_checkout_bloqueado_para_quem_ja_assina(): void
+    {
+        config(['services.mercadopago.access_token' => 'TEST-token']);
+        Http::fake();
+
+        $usuario = $this->usuarioExpirado();
+        $usuario->update(['assinatura_ativa_ate' => now()->addMonth()]);
+
+        $this->actingAs($usuario)
+            ->post(route('assinatura.checkout'))
+            ->assertRedirect(route('dashboard'));
+
+        // Não pode nascer um segundo preapproval no Mercado Pago.
+        Http::assertNothingSent();
     }
 
     public function test_webhook_ativa_assinatura_quando_autorizada(): void

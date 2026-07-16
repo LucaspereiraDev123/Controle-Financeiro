@@ -23,14 +23,12 @@ Route::get('/privacidade', [SiteController::class, 'privacidade'])->name('privac
 Route::get('/termos', [SiteController::class, 'termos'])->name('termos');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Tela de "assine para continuar" e checkout. Ficam FORA do middleware
-    // `assinatura` para não criar loop quando o acesso está bloqueado.
-    Route::get('/assinatura', [AssinaturaController::class, 'index'])->name('assinatura.expirada');
+    // Checkout da assinatura. O cliente chega aqui pela página de planos.
     Route::post('/assinatura/checkout', [AssinaturaController::class, 'checkout'])->name('assinatura.checkout');
     Route::get('/assinatura/retorno', [AssinaturaController::class, 'retorno'])->name('assinatura.retorno');
 
-    // Minha conta: dados do cliente e situação do plano. Acessível mesmo com
-    // a assinatura expirada, por isso fica fora do middleware `assinatura`.
+    // Minha conta: dados do cliente e situação do plano. É só leitura, e o
+    // cliente com assinatura expirada precisa dela para se resolver.
     Route::get('/conta', [ContaController::class, 'index'])->name('conta');
 
     // Painel de administração (só usuários is_admin). Fora do middleware
@@ -42,17 +40,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/usuarios/{usuario}/bloquear', [AdminUsuarioController::class, 'bloquearAcesso'])->name('usuarios.bloquear');
     });
 
-    // Áreas do app: exigem assinatura vigente ou período de teste ativo.
-    Route::middleware('assinatura')->group(function () {
-        Route::resource('/categorias', CategoriasController::class);
-        // Força o nome do parâmetro para casar com o type-hint Transacao $transacao
-        // (o Laravel singularizaria "transacoes" como "transaco", quebrando o binding).
-        Route::resource('/transacoes', TransacoesController::class)
-            ->parameters(['transacoes' => 'transacao']);
+    // Áreas do app. Consultar é livre: sem assinatura nem trial o cliente
+    // continua vendo o que registrou, em modo leitura. Só as rotas que ALTERAM
+    // dados exigem assinatura vigente — daí o middleware por método.
+    Route::resource('/categorias', CategoriasController::class)
+        ->middlewareFor(['create', 'store', 'edit', 'update', 'destroy'], 'assinatura');
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/filtro', [DashboardController::class, 'filtroDashboard'])->name('filtro');
-    });
+    // Força o nome do parâmetro para casar com o type-hint Transacao $transacao
+    // (o Laravel singularizaria "transacoes" como "transaco", quebrando o binding).
+    Route::resource('/transacoes', TransacoesController::class)
+        ->parameters(['transacoes' => 'transacao'])
+        ->middlewareFor(['create', 'store', 'edit', 'update', 'destroy'], 'assinatura');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/filtro', [DashboardController::class, 'filtroDashboard'])->name('filtro');
 });
 
 // Webhook do Mercado Pago (público, sem auth/CSRF — chamado pelo MP).
