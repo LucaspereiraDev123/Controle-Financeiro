@@ -20,6 +20,16 @@ class VerificarEmailNotification extends VerifyEmail implements ShouldQueue
     use Queueable;
 
     /**
+     * Falhas de SMTP costumam ser passageiras (provedor fora do ar, limite de
+     * envios por segundo). Sem retentativa, o job cai em failed_jobs na
+     * primeira recusa e a conta fica sem poder ser ativada.
+     */
+    public int $tries = 3;
+
+    /** Espera em segundos antes da 2ª e da 3ª tentativa. */
+    public array $backoff = [60, 300];
+
+    /**
      * @param  \App\Models\Usuario  $notifiable
      */
     public function toMail($notifiable): MailMessage
