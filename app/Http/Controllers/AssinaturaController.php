@@ -40,6 +40,54 @@ class AssinaturaController extends Controller
     }
 
     /**
+     * Tela de confirmação do cancelamento. Explica o que acontece antes de o
+     * cliente confirmar: sem novas cobranças, acesso até o fim do período pago.
+     */
+    public function cancelar()
+    {
+        $usuario = Auth::user();
+
+        if (! $usuario->podeCancelar()) {
+            return redirect()->route('conta');
+        }
+
+        return view('assinatura.cancelar', ['usuario' => $usuario]);
+    }
+
+    /**
+     * Encerra a assinatura no Mercado Pago. O acesso NÃO é revogado aqui: os
+     * Termos garantem o uso até o fim do período já pago, e é o vencimento de
+     * assinatura_ativa_ate que cuida disso.
+     */
+    public function cancelarConfirmado(MercadoPago $mp)
+    {
+        $usuario = Auth::user();
+
+        if (! $usuario->podeCancelar()) {
+            return redirect()->route('conta');
+        }
+
+        try {
+            $mp->cancelarAssinatura($usuario->mp_preapproval_id);
+        } catch (Throwable $e) {
+            Log::error('Falha ao cancelar assinatura no Mercado Pago', [
+                'usuario' => $usuario->id,
+                'erro' => $e->getMessage(),
+            ]);
+
+            return redirect()->route('conta')
+                ->with('msg', 'Não foi possível cancelar agora. Tente novamente em instantes ou fale com contato@economizacerto.com.br.');
+        }
+
+        $usuario->forceFill(['assinatura_cancelada_em' => now()])->save();
+
+        return redirect()->route('conta')->with('msg', sprintf(
+            'Assinatura cancelada. Não haverá novas cobranças e seu acesso continua até %s.',
+            $usuario->assinatura_ativa_ate->format('d/m/Y'),
+        ));
+    }
+
+    /**
      * Página de retorno após o checkout do Mercado Pago. A ativação em si é
      * confirmada de forma assíncrona pelo webhook, então aqui apenas
      * informamos que o pagamento está sendo processado.

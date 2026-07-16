@@ -27,17 +27,25 @@
             <x-slot:acoes>
                 <x-painel.botao :href="route('planos')">Assinar agora</x-painel.botao>
             </x-slot:acoes>
+        @elseif ($usuario->podeCancelar())
+            <x-slot:acoes>
+                <x-painel.botao :href="route('assinatura.cancelar')" variante="sec">Cancelar assinatura</x-painel.botao>
+            </x-slot:acoes>
         @endif
 
         <div class="painel-detalhe">
             @if ($status === 'ativa')
                 <div class="painel-detalhe-linha">
-                    <span>Válida até</span>
+                    <span>{{ $usuario->assinaturaCancelada() ? 'Acesso até' : 'Válida até' }}</span>
                     <strong>{{ $usuario->assinatura_ativa_ate->format('d/m/Y') }}</strong>
                 </div>
                 <div class="painel-detalhe-linha">
                     <span>Renovação</span>
-                    <strong>Automática (mensal)</strong>
+                    @if ($usuario->assinaturaCancelada())
+                        <strong>Cancelada em {{ $usuario->assinatura_cancelada_em->format('d/m/Y') }} — sem novas cobranças</strong>
+                    @else
+                        <strong>Automática (mensal)</strong>
+                    @endif
                 </div>
             @elseif ($status === 'trial')
                 <div class="painel-detalhe-linha">
