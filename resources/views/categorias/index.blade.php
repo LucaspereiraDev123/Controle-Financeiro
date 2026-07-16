@@ -1,7 +1,9 @@
 <x-painel.layout titulo="Categorias" cabecalho="Categorias" subcabecalho="Organize seus lançamentos por categoria" nav="categorias">
-    <x-slot:acoes>
-        <x-painel.botao :href="route('categorias.create')">+ Nova categoria</x-painel.botao>
-    </x-slot:acoes>
+    @podeEditar
+        <x-slot:acoes>
+            <x-painel.botao :href="route('categorias.create')">+ Nova categoria</x-painel.botao>
+        </x-slot:acoes>
+    @endpodeEditar
 
     <x-painel.bloco>
         <x-painel.tabela :colunas="['Tipo', 'Nome', 'Opções']">
@@ -11,7 +13,9 @@
                     <td>{{ $c->nome }}</td>
                     <td class="painel-tabela-acoes">
                         <a href="{{ route('categorias.show', $c->id) }}">Mostrar</a>
-                        <a href="{{ route('categorias.edit', $c->id) }}">Editar</a>
+                        @podeEditar
+                            <a href="{{ route('categorias.edit', $c->id) }}">Editar</a>
+                        @endpodeEditar
                     </td>
                 </tr>
             @empty

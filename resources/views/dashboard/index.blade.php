@@ -4,9 +4,11 @@
     subcabecalho="Aqui está o resumo das suas finanças"
     nav="dashboard"
 >
-    <x-slot:acoes>
-        <x-painel.botao :href="route('transacoes.create')">+ Nova transação</x-painel.botao>
-    </x-slot:acoes>
+    @podeEditar
+        <x-slot:acoes>
+            <x-painel.botao :href="route('transacoes.create')">+ Nova transação</x-painel.botao>
+        </x-slot:acoes>
+    @endpodeEditar
 
     @if (session('msg'))
         <div class="painel-alerta">{{ session('msg') }}</div>
@@ -79,7 +81,9 @@
                     <td>{{ $t->created_at->format('d/m/Y') }}</td>
                     <td class="painel-tabela-acoes">
                         <a href="{{ route('transacoes.show', $t->id) }}">Exibir</a>
-                        <a href="{{ route('transacoes.edit', $t->id) }}">Editar</a>
+                        @podeEditar
+                            <a href="{{ route('transacoes.edit', $t->id) }}">Editar</a>
+                        @endpodeEditar
                     </td>
                 </tr>
             @empty

@@ -34,10 +34,12 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
                 <span>Categorias</span>
             </a>
-            <a href="{{ route('transacoes.create') }}" class="painel-nav-item {{ $nav === 'nova' ? 'ativo' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-                <span>Nova transação</span>
-            </a>
+            @podeEditar
+                <a href="{{ route('transacoes.create') }}" class="painel-nav-item {{ $nav === 'nova' ? 'ativo' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+                    <span>Nova transação</span>
+                </a>
+            @endpodeEditar
         </nav>
 
         <p class="painel-menu-titulo">Suporte</p>
@@ -46,7 +48,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
                 <span>Minha conta</span>
             </a>
-            <a href="{{ route('planos') }}" class="painel-nav-item">
+            <a href="{{ route('planos') }}" class="painel-nav-item {{ $nav === 'planos' ? 'ativo' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z"/></svg>
                 <span>Planos</span>
             </a>
@@ -83,6 +85,19 @@
             </div>
             <div class="painel-topo-acoes">{{ $acoes ?? '' }}</div>
         </header>
+
+        {{-- Sem assinatura o app fica em modo leitura: avisa e oferece a saída. --}}
+        @unless (auth()->user()?->podeEditar() ?? true)
+            <div class="painel-aviso painel-aviso--expirado">
+                <span>
+                    Seu período de teste terminou — sua conta está em <strong>modo leitura</strong>.
+                    Seus dados continuam aqui. Assine para voltar a lançar.
+                </span>
+                @unless (request()->routeIs('planos'))
+                    <x-painel.botao :href="route('planos')">Ver planos</x-painel.botao>
+                @endunless
+            </div>
+        @endunless
 
         <div class="painel-conteudo">
             {{ $slot }}

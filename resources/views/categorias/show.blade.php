@@ -15,7 +15,9 @@
             </div>
 
             <div class="painel-form-acoes">
-                <x-painel.botao :href="route('categorias.edit', $categoria->id)">Editar</x-painel.botao>
+                @podeEditar
+                    <x-painel.botao :href="route('categorias.edit', $categoria->id)">Editar</x-painel.botao>
+                @endpodeEditar
                 <x-painel.botao :href="route('categorias.index')" variante="sec">Voltar</x-painel.botao>
             </div>
         @endif

@@ -8,9 +8,9 @@
         <p class="site-planos-sub">Comece com 14 dias grátis. Cancele quando quiser.</p>
 
         <div class="site-plano">
-            <h2>Plano Economiza Certo</h2>
+            <h2>{{ config('services.mercadopago.plano_nome') }}</h2>
             <p class="site-plano-preco">
-                <span class="site-plano-valor">R$ 19,90</span>
+                <span class="site-plano-valor">R$ {{ number_format(config('services.mercadopago.plano_valor'), 2, ',', '.') }}</span>
                 <span class="site-plano-periodo">/mês</span>
             </p>
             <ul class="site-plano-itens">

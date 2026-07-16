@@ -8,27 +8,11 @@ use Illuminate\Support\Facades\Log;
 use Throwable;
 
 /**
- * Tela de "assine para continuar" e início do checkout de assinatura.
- * Fica fora do middleware `assinatura` para não entrar em loop de
- * redirecionamento.
+ * Início do checkout de assinatura e retorno do Mercado Pago. O cliente chega
+ * aqui pela página de planos (`SiteController::planos`).
  */
 class AssinaturaController extends Controller
 {
-    public function index()
-    {
-        $usuario = Auth::user();
-
-        // Quem ainda tem acesso não precisa desta tela.
-        if ($usuario->assinaturaAtiva()) {
-            return redirect()->route('dashboard');
-        }
-
-        return view('assinatura.expirada', [
-            'status' => $usuario->statusAssinatura(),
-            'mpConfigurado' => app(MercadoPago::class)->configurado(),
-        ]);
-    }
-
     /**
      * Cria a assinatura no Mercado Pago e envia o usuário para o checkout
      * seguro (onde ele digita o cartão).
@@ -37,8 +21,10 @@ class AssinaturaController extends Controller
     {
         $usuario = Auth::user();
 
-        if ($usuario->assinaturaAtiva()) {
-            return redirect()->route('dashboard');
+        // Só quem já paga é barrado, para não criar assinatura duplicada. Quem
+        // está em trial pode assinar antes do prazo acabar.
+        if ($usuario->statusAssinatura() === 'ativa') {
+            return redirect()->route('dashboard')->with('msg', 'Sua assinatura já está ativa.');
         }
 
         try {
@@ -46,7 +32,7 @@ class AssinaturaController extends Controller
         } catch (Throwable $e) {
             Log::error('Falha no checkout do Mercado Pago', ['erro' => $e->getMessage()]);
 
-            return redirect()->route('assinatura.expirada')
+            return redirect()->route('planos')
                 ->with('msg', 'Não foi possível iniciar o pagamento agora. Tente novamente em instantes.');
         }
 
@@ -66,7 +52,7 @@ class AssinaturaController extends Controller
             return redirect()->route('dashboard')->with('msg', 'Assinatura ativada com sucesso. Bem-vindo(a) de volta!');
         }
 
-        return redirect()->route('assinatura.expirada')
+        return redirect()->route('planos')
             ->with('msg', 'Recebemos seu pagamento e estamos confirmando. Isso pode levar alguns instantes.');
     }
 }

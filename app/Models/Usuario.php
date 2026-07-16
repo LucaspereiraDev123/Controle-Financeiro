@@ -105,6 +105,18 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Pode lançar/alterar dados? Sem assinatura vigente nem trial, o usuário
+     * continua entrando e consultando o que já registrou, mas em modo leitura.
+     *
+     * Ponto único da decisão: o middleware de escrita e a diretiva @podeEditar
+     * das views consultam este método.
+     */
+    public function podeEditar(): bool
+    {
+        return $this->assinaturaAtiva();
+    }
+
+    /**
      * Estado atual da assinatura: 'ativa' (paga), 'trial' (em teste) ou
      * 'expirada' (sem acesso).
      */
