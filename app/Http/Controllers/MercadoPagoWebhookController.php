@@ -52,8 +52,17 @@ class MercadoPagoWebhookController extends Controller
         $usuario->mp_preapproval_id = $preapprovalId;
 
         if (($assinatura['status'] ?? null) === 'authorized') {
-            // Estende o acesso por um ciclo a partir de agora.
+            // Estende o acesso por um ciclo a partir de agora. Uma cobrança
+            // aprovada também significa que a assinatura voltou a valer.
             $usuario->assinatura_ativa_ate = now()->addMonth();
+            $usuario->assinatura_cancelada_em = null;
+        }
+
+        // O cliente pode cancelar pela conta dele no Mercado Pago, sem passar
+        // pelo nosso fluxo. O acesso já pago é preservado; só as renovações
+        // acabam — daí registrarmos apenas a data do cancelamento.
+        if (($assinatura['status'] ?? null) === 'cancelled' && ! $usuario->assinaturaCancelada()) {
+            $usuario->assinatura_cancelada_em = now();
         }
 
         $usuario->save();

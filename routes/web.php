@@ -27,6 +27,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/assinatura/checkout', [AssinaturaController::class, 'checkout'])->name('assinatura.checkout');
     Route::get('/assinatura/retorno', [AssinaturaController::class, 'retorno'])->name('assinatura.retorno');
 
+    // Cancelamento: confirmação e execução. O cliente chega pela Minha conta.
+    Route::get('/assinatura/cancelar', [AssinaturaController::class, 'cancelar'])->name('assinatura.cancelar');
+    Route::delete('/assinatura', [AssinaturaController::class, 'cancelarConfirmado'])->name('assinatura.cancelar.confirmar');
+
     // Minha conta: dados do cliente e situação do plano. É só leitura, e o
     // cliente com assinatura expirada precisa dela para se resolver.
     Route::get('/conta', [ContaController::class, 'index'])->name('conta');

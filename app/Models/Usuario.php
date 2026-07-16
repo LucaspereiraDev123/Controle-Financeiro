@@ -28,6 +28,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         'trial_ends_at',
         'assinatura_ativa_ate',
         'mp_preapproval_id',
+        'assinatura_cancelada_em',
         'termos_aceitos_em',
         'is_admin',
     ];
@@ -86,6 +87,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'trial_ends_at' => 'datetime',
             'assinatura_ativa_ate' => 'datetime',
+            'assinatura_cancelada_em' => 'datetime',
             'termos_aceitos_em' => 'datetime',
             'is_admin' => 'boolean',
         ];
@@ -131,6 +133,26 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         }
 
         return 'expirada';
+    }
+
+    /**
+     * A assinatura foi cancelada e apenas cumpre o período já pago.
+     */
+    public function assinaturaCancelada(): bool
+    {
+        return $this->assinatura_cancelada_em !== null;
+    }
+
+    /**
+     * Só há o que cancelar se existe uma assinatura paga vigente e um
+     * preapproval no Mercado Pago para encerrar. Acesso concedido à mão pelo
+     * admin não passa pelo gateway, portanto não tem o que cancelar.
+     */
+    public function podeCancelar(): bool
+    {
+        return $this->statusAssinatura() === 'ativa'
+            && $this->mp_preapproval_id !== null
+            && ! $this->assinaturaCancelada();
     }
 
     /**

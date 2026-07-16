@@ -58,6 +58,24 @@ class MercadoPago
     }
 
     /**
+     * Cancela a assinatura no Mercado Pago, encerrando as cobranças futuras.
+     * Não estorna o que já foi pago — o acesso segue até o fim do período,
+     * conforme os Termos.
+     */
+    public function cancelarAssinatura(string $preapprovalId): void
+    {
+        $resposta = Http::withToken(config('services.mercadopago.access_token'))
+            ->acceptJson()
+            ->put(self::BASE.'/preapproval/'.$preapprovalId, [
+                'status' => 'cancelled',
+            ]);
+
+        if ($resposta->failed()) {
+            throw new RuntimeException('Falha ao cancelar assinatura no Mercado Pago: '.$resposta->body());
+        }
+    }
+
+    /**
      * Consulta uma assinatura (preapproval) diretamente na API — usado para
      * confirmar o status a partir de um webhook, sem confiar no corpo recebido.
      *
