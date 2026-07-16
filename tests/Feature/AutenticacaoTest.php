@@ -133,6 +133,20 @@ class AutenticacaoTest extends TestCase
         $this->assertSame('Redefinir senha', $mail->actionText);
     }
 
+    public function test_emails_usam_o_nome_da_marca_configurado(): void
+    {
+        config(['app.name' => 'Marca De Teste']);
+        $usuario = $this->novoUsuario(verificado: false);
+
+        $verificacao = (new VerificarEmailNotification())->toMail($usuario);
+        $reset = (new RedefinirSenhaNotification('token-de-teste'))->toMail($usuario);
+
+        foreach ([$verificacao, $reset] as $mail) {
+            $this->assertStringContainsString('Marca De Teste', $mail->subject);
+            $this->assertStringContainsString('Marca De Teste', $mail->salutation);
+        }
+    }
+
     public function test_notificacoes_de_email_sao_enfileiradas(): void
     {
         $this->assertInstanceOf(ShouldQueue::class, new VerificarEmailNotification());

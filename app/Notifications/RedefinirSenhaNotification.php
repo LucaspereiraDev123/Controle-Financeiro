@@ -24,14 +24,15 @@ class RedefinirSenhaNotification extends ResetPassword implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         $minutos = config('auth.passwords.'.config('auth.defaults.passwords').'.expire');
+        $marca = config('app.name');
 
         return (new MailMessage)
-            ->subject('Redefinição de senha — Aí Economiza')
+            ->subject("Redefinição de senha — {$marca}")
             ->greeting('Olá!')
             ->line('Recebemos um pedido para redefinir a senha da sua conta.')
             ->action('Redefinir senha', $this->resetUrl($notifiable))
             ->line("Este link de redefinição expira em {$minutos} minutos.")
             ->line('Se você não solicitou a redefinição, ignore este e-mail.')
-            ->salutation('Abraços, equipe Aí Economiza');
+            ->salutation("Abraços, equipe {$marca}");
     }
 }
